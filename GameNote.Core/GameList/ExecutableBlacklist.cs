@@ -8,14 +8,16 @@ namespace GameNote.Core.GameList
         private List<string> _files = new List<string>()
         {
             "VC_Redist",
-            "CrashReportClient",
+            "CrashReport",
             "CrashLoader",
             "Setup",
             "vcredist",
             "RiotClient",
             "CrashHandler",
             "Updater",
-            "LogServer"
+            "LogServer",
+            "WatchDog",
+            "DirectXRedist"
         };
 
         public bool IsInBlackList(FileInfo file)

@@ -6,9 +6,10 @@ namespace GameNote.CLI.Helpers
     public class ConsoleWriteTable<T>
     {
         private readonly Dictionary<string, Func<T, string>> _columns = new Dictionary<string, Func<T, string>>();
+        private readonly Dictionary<string, ColumnAlign> _columnAlign =new Dictionary<string, ColumnAlign>();
         private readonly IEnumerable<T> _list;
         private readonly Dictionary<string, int> _columnWidths = new Dictionary<string, int>();
-        private static int _padding = 10;
+        private static int _padding = 2;
         private int _width = 1;
 
         public ConsoleWriteTable(IEnumerable<T> list)
@@ -16,7 +17,13 @@ namespace GameNote.CLI.Helpers
             _list = list;
         }
 
-        public ConsoleWriteTable<T> AddColumn(string columnName, Func<T, string> column)
+        public enum ColumnAlign 
+        {
+            Left,
+            Center
+        }
+
+        public ConsoleWriteTable<T> AddColumn(string columnName, Func<T, string> column, ColumnAlign align = ColumnAlign.Center)
         {
             _columns.Add(columnName, column);
 
@@ -27,8 +34,11 @@ namespace GameNote.CLI.Helpers
                 if (length > columnWidth)
                     columnWidth = length;
             }
+
+            columnWidth += (_padding * 2) + 1;
             _columnWidths.Add(columnName, columnWidth);
-            _width += (_padding * 2) + columnWidth + 1;
+            _width += columnWidth;
+            _columnAlign.Add(columnName, align);
 
             return this;
         }
@@ -53,7 +63,12 @@ namespace GameNote.CLI.Helpers
                 foreach (var column in _columns)
                 {
                     int width = _columnWidths[column.Key];
-                    row += AlignCenter(column.Value(item), width);
+                    ColumnAlign align = _columnAlign[column.Key];
+
+                    if (align == ColumnAlign.Center)
+                        row += AlignCenter(column.Value(item), width) + "|";
+                    else
+                        row += AlignLeft(column.Value(item), width) + "|";
                 }
                 Console.WriteLine(row);
             }
@@ -62,12 +77,18 @@ namespace GameNote.CLI.Helpers
 
         private string AlignCenter(string text, int width)
         {
-            text = text.Length > width ? text.Substring(0, width - 3) + "..." : text;
-
             if (string.IsNullOrEmpty(text))
                 return new string(' ', width);
             else
                 return text.PadRight(width - (width - text.Length) / 2).PadLeft(width);
+        }
+
+        private string AlignLeft(string text, int width)
+        {
+            if (string.IsNullOrEmpty(text))
+                return new string(' ', width);
+            else
+                return text.PadLeft(_padding + text.Length).PadRight(width);
         }
 
         private string ConstructLine(int width)

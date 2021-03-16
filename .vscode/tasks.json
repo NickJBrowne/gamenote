@@ -7,49 +7,12 @@
             "type": "process",
             "args": [
                 "build",
-                "${workspaceFolder}/GameNote.Core.UnitTests/GameNote.Core.UnitTests.csproj",
+                "${workspaceFolder}/GameNote.CLI/GameNote.CLI.csproj",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary"
             ],
             "problemMatcher": "$msCompile"
         },
-        {
-            "label": "publish",
-            "command": "dotnet",
-            "type": "process",
-            "args": [
-                "publish",
-                "${workspaceFolder}/GameNote.Core.UnitTests/GameNote.Core.UnitTests.csproj",
-                "/property:GenerateFullPaths=true",
-                "/consoleloggerparameters:NoSummary"
-            ],
-            "problemMatcher": "$msCompile"
-        },
-        {
-            "label": "watch",
-            "command": "dotnet",
-            "type": "process",
-            "args": [
-                "watch",
-                "run",
-                "${workspaceFolder}/GameNote.Core.UnitTests/GameNote.Core.UnitTests.csproj",
-                "/property:GenerateFullPaths=true",
-                "/consoleloggerparameters:NoSummary"
-            ],
-            "problemMatcher": "$msCompile"
-        },
-        {
-            "label": "cli",
-            "command": "GameNote.CLI.exe",
-            "args": [
-                "${input:cliCommand}"
-            ],
-            "options": {
-                "cwd": "${workspaceFolder}/GameNote.CLI/bin/Debug/net5.0/"
-            },
-            "type": "process",
-            "problemMatcher": "$msCompile",
-        }
     ],
     "inputs": [
         {

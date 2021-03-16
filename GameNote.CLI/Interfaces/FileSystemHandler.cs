@@ -8,7 +8,7 @@ namespace GameNote.CLI.Interfaces
     public class FileSystemHandler : IFileSystemHandler
     {
         public bool DoesDirectoryExist(string path)
-            => File.Exists(path);
+            => Directory.Exists(path);
 
         public IEnumerable<FileInfo> GetExecutableFiles(string path)
             => Directory.GetFiles(
