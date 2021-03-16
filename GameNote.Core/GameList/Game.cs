@@ -5,5 +5,6 @@ namespace GameNote.Core.GameList
         public string Executable { get; set; } 
         public string FullPath { get; set; }
         public bool AlreadyConfigured { get; set; }
+        public bool IsBlacklisted { get; set; }
     }
 }

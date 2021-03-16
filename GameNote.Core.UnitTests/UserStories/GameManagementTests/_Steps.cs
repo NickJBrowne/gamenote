@@ -4,17 +4,21 @@ using Helpers.UnitTest;
 using System.IO;
 using FluentAssertions;
 using GameNote.Core.GameList;
+using Moq;
+using GameNote.Core.GameClose;
 
 namespace GameNote.Core.UnitTests.UserStories.GameManagementTests
 {
     public static class Steps
     {
-        private static List<string> files = new List<string>() {
-            "C:/folder/game.exe",
-            "C:/folder4/setupgame.exe",
-            "C:/folder2/CrashLoader.exe",
-            "C:/folder3/vc_resdist.exe"
-        };
+        private static string _setupGame = @"C:\folder4\setupgame.exe";
+
+        private static List<string> _files = new List<string>() {
+            @"C:\folder\game.exe",
+            _setupGame,
+            @"C:\folder2\CrashLoader.exe",
+            @"C:\folder3\vc_redist.exe"
+        };       
 
         private static string _validDirectory = Directory.GetCurrentDirectory();
 
@@ -25,15 +29,29 @@ namespace GameNote.Core.UnitTests.UserStories.GameManagementTests
             return given;
         }
 
+        public static Given<GameManagementContext> The_User_Has_Already_Setup_A_Game(
+            this Given<GameManagementContext> given
+        )
+        {
+            given.Context.Settings.AddGame(_setupGame, GameCloseAction.OpenUrl(new System.Uri("http://test.com")));
+            return given;
+        }
+
         public static When<GameManagementContext> The_List_Is_Returned(
             this When<GameManagementContext> when
         )
         {
-            
+            var mock = new Mock<IFileSystemHandler>();
+            mock.Setup(r => r.DoesDirectoryExist(It.IsAny<string>()))
+                .Returns(true);
+
+            mock.Setup(r => r.GetExecutableFiles(It.IsAny<string>()))
+                .Returns(_files.Select(f => new FileInfo(f)));
 
             when.Context.GameList = new GetGamesInDirectory(
-
-            ).Run(_validDirectory);
+                mock.Object,
+                when.Context.Settings
+            ).Run(_validDirectory).ToList();
             return when;
         }
 
@@ -49,7 +67,8 @@ namespace GameNote.Core.UnitTests.UserStories.GameManagementTests
             this Then<GameManagementContext> then
         )
         {
-            var setupGame = then.Context.GameList.FirstOrDefault(g => g.Executable == "setupgame.exe");
+            string fileName = Path.GetFileName(_setupGame);
+            var setupGame = then.Context.GameList.FirstOrDefault(g => g.Executable == fileName);
             setupGame.Should().NotBeNull();
             setupGame.AlreadyConfigured.Should().BeTrue();
             return then;

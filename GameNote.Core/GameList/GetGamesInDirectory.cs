@@ -15,44 +15,38 @@ namespace GameNote.Core.GameList
             _settings = settings;
         }
 
-        public List<Game> Run(string directory)
+        public IEnumerable<Game> Run(string directory, bool returnBlacklisted=false)
         {
             if (_fileSystem.DoesDirectoryExist(directory) == false)
                 throw new System.Exception($"Could not find directory: {directory}");
 
-            var rawFiles = _fileSystem.GetExecutableFiles(directory);
-            var files = RunAgainstBlacklist(rawFiles);
+            var files = _fileSystem.GetExecutableFiles(directory);
             if (files.Any() == false)
                 throw new System.Exception($"No files found within directory {directory}");
+
+            var blacklist = new ExecutableBlacklist();            
 
             var result = new List<Game>();
             foreach(var file in files)
             {
+                bool isAlreadyConfigured = _settings.HasSettings(file);
+                bool isBlacklisted = blacklist.IsInBlackList(file);
+
+                if (isAlreadyConfigured == true)
+                    isBlacklisted = false;
+
                 var item = new Game()
                 {
                     Executable = file.Name,
                     FullPath = file.FullName,
-                    AlreadyConfigured = _settings.HasSettings(file)
+                    AlreadyConfigured = isAlreadyConfigured,
+                    IsBlacklisted = isBlacklisted
                 };
                 result.Add(item);
             }
-            return result;
-        }
 
-        private List<FileInfo> RunAgainstBlacklist(List<FileInfo> files)
-        {
-            var result = new List<FileInfo>();
-
-            if (files.Any() == false)
-                return result;
-
-            var blacklist = new ExecutableBlacklist();
-
-            foreach (var file in files)
-            {
-                if (blacklist.IsInBlackList(file) == false)
-                    result.Add(file);
-            }
+            if (returnBlacklisted == false)
+                return result.Where(r => r.IsBlacklisted == false);
 
             return result;
         }

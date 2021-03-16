@@ -7,6 +7,6 @@ namespace GameNote.Core.GameList
     {
         bool DoesDirectoryExist(string path);
 
-        List<FileInfo> GetExecutableFiles(string path);
+        IEnumerable<FileInfo> GetExecutableFiles(string path);
     }
 }

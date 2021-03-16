@@ -6,6 +6,6 @@ namespace GameNote.Core.UnitTests.UserStories.GameManagementTests
     public class GameManagementContext
     {
         public List<Game> GameList { get; set; }
-        public Settings Settings { get; set; }
+        public Settings Settings { get; set; } = new Settings();
     }
 }

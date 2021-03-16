@@ -37,6 +37,25 @@
                 "/consoleloggerparameters:NoSummary"
             ],
             "problemMatcher": "$msCompile"
+        },
+        {
+            "label": "cli",
+            "command": "GameNote.CLI.exe",
+            "args": [
+                "${input:cliCommand}"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}/GameNote.CLI/bin/Debug/net5.0/"
+            },
+            "type": "process",
+            "problemMatcher": "$msCompile",
+        }
+    ],
+    "inputs": [
+        {
+            "id": "cliCommand",
+            "description": "The command to run",
+            "type": "promptString"
         }
     ]
 }

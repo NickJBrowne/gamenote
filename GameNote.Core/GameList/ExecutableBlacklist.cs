@@ -9,6 +9,7 @@ namespace GameNote.Core.GameList
         {
             "VC_Redist",
             "CrashReportClient",
+            "CrashLoader",
             "Setup",
             "vcredist",
             "RiotClient",
@@ -22,7 +23,7 @@ namespace GameNote.Core.GameList
             string fileName = file.Name.ToLower();
             for (int i = 0; i < _files.Count; i++)
             {
-                var match = _files[i];
+                var match = _files[i].ToLower();
                 if (fileName.Contains(match))
                     return true;
             }
