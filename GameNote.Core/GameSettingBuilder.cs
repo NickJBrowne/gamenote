@@ -52,24 +52,25 @@ namespace GameNote.Core
             return this;
         }
 
-        public GameSettingBuilder SetOnGameCloseAction(string onCloseAction, string arguments)
+        public GameSettingBuilder OnGameCloseOpenUrl(string url)
         {
-            switch(onCloseAction)
-            {
-                case "open-url":
-                    _action = GameCloseActionEnum.OpenUrl;
-                    break;
+            var uri = new Uri(url);
+            _action = GameCloseActionEnum.OpenUrl;
+            _arguments = uri.ToString();
+            return this;
+        }
 
-                case "open-exe":
-                    _action = GameCloseActionEnum.OpenProgram;
-                    break;
-
-                default:
-                    throw new NotImplementedException($"On Close action not supported: {onCloseAction}");
-            }
-
+        public GameSettingBuilder OnGameCloseOpenProgram(string arguments)
+        {
+            _action = GameCloseActionEnum.OpenProgram;
             _arguments = arguments;
+            return this;
+        }
 
+        public GameSettingBuilder OnGameCloseDoNothing()
+        {
+            _action = GameCloseActionEnum.DoNothing;
+            _arguments = string.Empty;
             return this;
         }
 

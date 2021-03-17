@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using GameNote.CLI.Helpers;
 using GameNote.CLI.Interfaces;
@@ -53,20 +54,44 @@ namespace GameNote.CLI
                     });
 
                     gameCommand.Command("list", listCommand => {
-                        listCommand.HelpOption();
-                        listCommand.Description = "List potential executable files in a directory";
+                       listCommand.HelpOption();
+                       listCommand.Description = "Show a list of all games being monitored";
 
-                        var directory = listCommand
+                       listCommand.OnExecute(() => {
+                            var settings = settingsHandler.Load();
+
+                            if (settings.Games.Any() == false)
+                            {
+                                Console.WriteLine("No games found"); 
+                                return 0;
+                            }
+
+                            new ConsoleWriteTable<Settings.GameSetting>(settings.Games)
+                                .AddColumn("File Name", g => Path.GetFileName(g.FilePath))
+                                .AddColumn("File Path", g => g.FilePath, ConsoleWriteTable<Settings.GameSetting>.ColumnAlign.Left)
+                                .AddColumn("OnCloseAction", g => g.GameCloseAction.Action.ToString())
+                                .AddColumn("Arguments", g => g.GameCloseAction.Arguments)
+                                .Write();
+                            return 0;
+                       });
+                    });
+
+                    gameCommand.Command("find", findCommand => {
+                        findCommand.HelpOption();
+                        findCommand.Description = "Find potential executable files in a directory";
+
+                        var directory = findCommand
                             .Option("-d|--dir", "Directory to look in", CommandOptionType.SingleValue)
                             .IsRequired();
 
-                        listCommand.OnExecute(() => {
+                        findCommand.OnExecute(() => {
                             var handler = services.GetRequiredService<GetGamesInDirectory>();
                             var result = handler.Run(directory.Value());
                             new ConsoleWriteTable<Game>(result)
                                 .AddColumn("File Name", x => x.Executable)
                                 .AddColumn("Full Path", x => x.FullPath, ConsoleWriteTable<Game>.ColumnAlign.Left)
                                 .Write();
+                            return 0;
                         });
                     });
                     
@@ -83,13 +108,11 @@ namespace GameNote.CLI
                         var exeName = addCommand
                             .Option("-fn|--filename", "The name of the file, use this in junction with -f|--f command", CommandOptionType.SingleValue);
 
-                        var onCloseAction = addCommand
-                            .Option("-oc|--on-close", "Either open a url or run an application. Use the -a|--args args value to specify details. Either 'open-url' to open a web page or 'open-exe' to open a program", CommandOptionType.SingleValue)
-                            .IsRequired();
+                        var openUrl = addCommand
+                            .Option("-url|--open-url", "On game close open a browser to url", CommandOptionType.SingleValue);
 
-                        var args = addCommand
-                            .Option("-a|--args", "On close arguments", CommandOptionType.SingleValue)
-                            .IsRequired();
+                        var openProgram = addCommand
+                            .Option("-exe|--open-program", "On game close open a program", CommandOptionType.SingleValue);
 
                         addCommand.OnExecute(() => {
                             var builder = services.GetRequiredService<GameSettingBuilder>();
@@ -101,9 +124,19 @@ namespace GameNote.CLI
                             else
                                 throw new Exception("You must specify either a direct file path or a folder path and a file name");
 
-                            builder.SetOnGameCloseAction(onCloseAction.Value(), args.Value());
+                            if (openUrl.HasValue())
+                                builder.OnGameCloseOpenUrl(openUrl.Value());
+                            else if (openProgram.HasValue())
+                                builder.OnGameCloseOpenProgram(openProgram.Value());
+                            else
+                            {
+                                Console.WriteLine("On game close, nothing will happen");
+                                builder.OnGameCloseDoNothing();
+                            }
+
                             string fileName = builder.Build();
                             Console.WriteLine($"Added game: {fileName}");
+                            return 0;
                         });
                     });
                     // Remove game
