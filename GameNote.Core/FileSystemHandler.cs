@@ -1,10 +1,8 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using GameNote.Core;
-using GameNote.Core.GameList;
 
-namespace GameNote.CLI.Interfaces
+namespace GameNote.Core
 {
     public class FileSystemHandler : IFileSystemHandler
     {

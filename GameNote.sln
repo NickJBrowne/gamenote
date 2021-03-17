@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Helpers", "Helpers\Helpers.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameNote.CLI", "GameNote.CLI\GameNote.CLI.csproj", "{E224D6B3-6A4F-472D-98C2-C6CE32117012}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameNote.Service", "GameNote.Service\GameNote.Service.csproj", "{5C57C11C-ECA2-422D-94AA-B4B9C257FEE5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -72,5 +74,17 @@ Global
 		{E224D6B3-6A4F-472D-98C2-C6CE32117012}.Release|x64.Build.0 = Release|Any CPU
 		{E224D6B3-6A4F-472D-98C2-C6CE32117012}.Release|x86.ActiveCfg = Release|Any CPU
 		{E224D6B3-6A4F-472D-98C2-C6CE32117012}.Release|x86.Build.0 = Release|Any CPU
+		{5C57C11C-ECA2-422D-94AA-B4B9C257FEE5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5C57C11C-ECA2-422D-94AA-B4B9C257FEE5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5C57C11C-ECA2-422D-94AA-B4B9C257FEE5}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{5C57C11C-ECA2-422D-94AA-B4B9C257FEE5}.Debug|x64.Build.0 = Debug|Any CPU
+		{5C57C11C-ECA2-422D-94AA-B4B9C257FEE5}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{5C57C11C-ECA2-422D-94AA-B4B9C257FEE5}.Debug|x86.Build.0 = Debug|Any CPU
+		{5C57C11C-ECA2-422D-94AA-B4B9C257FEE5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5C57C11C-ECA2-422D-94AA-B4B9C257FEE5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5C57C11C-ECA2-422D-94AA-B4B9C257FEE5}.Release|x64.ActiveCfg = Release|Any CPU
+		{5C57C11C-ECA2-422D-94AA-B4B9C257FEE5}.Release|x64.Build.0 = Release|Any CPU
+		{5C57C11C-ECA2-422D-94AA-B4B9C257FEE5}.Release|x86.ActiveCfg = Release|Any CPU
+		{5C57C11C-ECA2-422D-94AA-B4B9C257FEE5}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

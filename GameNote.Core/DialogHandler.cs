@@ -1,6 +1,4 @@
-using GameNote.Core;
-
-namespace GameNote.CLI.Interfaces
+namespace GameNote.Core
 {
     public class DialogHandler : IDialogHandler
     {

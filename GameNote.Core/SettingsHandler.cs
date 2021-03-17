@@ -1,8 +1,7 @@
 using System.IO;
-using GameNote.Core;
 using Newtonsoft.Json;
 
-namespace GameNote.CLI.Interfaces
+namespace GameNote.Core
 {
     public class SettingsHandler : ISettingsHandler
     {

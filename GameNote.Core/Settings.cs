@@ -24,6 +24,9 @@ namespace GameNote.Core
             });
         }
 
+        public bool HasGames()
+            => this.Games.Any();
+
         public bool HasSettings(FileInfo fileInfo)
             => this.Games.Any(g => g.FilePath == fileInfo.FullName);
 

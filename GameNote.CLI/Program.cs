@@ -1,14 +1,11 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
-using System.Threading.Tasks;
 using GameNote.CLI.Helpers;
-using GameNote.CLI.Interfaces;
 using GameNote.Core;
 using GameNote.Core.GameList;
 using McMaster.Extensions.CommandLineUtils;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 
 namespace GameNote.CLI
 {
@@ -16,20 +13,12 @@ namespace GameNote.CLI
     {
         static int Main(string[] args)
         {            
-            var settingsHandler = new SettingsHandler(
-                Path.Combine(
-                    Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
-                    "GameNote"
-                )
-            );
+            var settingsHandler = new AppDataSettingsHandler();
             var settings = settingsHandler.Load();
 
             var services = new ServiceCollection()
-                .AddTransient<GetGamesInDirectory>()
-                .AddTransient<GameSettingBuilder>()
-                .AddTransient<IFileSystemHandler, FileSystemHandler>()
-                .AddTransient<IDialogHandler, DialogHandler>()
-                .AddSingleton<ISettingsHandler>(settingsHandler)
+                .AddGameNoteServices()
+                .AddSingletonSettingsHandler(settingsHandler)
                 .BuildServiceProvider();
 
             try
