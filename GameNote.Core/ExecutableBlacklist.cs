@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.IO;
 
-namespace GameNote.Core.GameList
+namespace GameNote.Core
 {
     public class ExecutableBlacklist
     {

@@ -48,9 +48,13 @@ namespace GameNote.Core.UnitTests.UserStories.GameManagementTests
             mock.Setup(r => r.GetExecutableFiles(It.IsAny<string>()))
                 .Returns(_files.Select(f => new FileInfo(f)));
 
+            var settingsHandler = new Mock<ISettingsHandler>();
+            settingsHandler.Setup(r => r.Load())
+                .Returns(when.Context.Settings);
+
             when.Context.GameList = new GetGamesInDirectory(
                 mock.Object,
-                when.Context.Settings
+                settingsHandler.Object
             ).Run(_validDirectory).ToList();
             return when;
         }

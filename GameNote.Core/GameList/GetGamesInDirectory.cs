@@ -7,12 +7,12 @@ namespace GameNote.Core.GameList
     public class GetGamesInDirectory
     {
         private IFileSystemHandler _fileSystem;
-        private Settings _settings;
+        private ISettingsHandler _settingsHandler;
 
-        public GetGamesInDirectory(IFileSystemHandler fileSystem, Settings settings)
+        public GetGamesInDirectory(IFileSystemHandler fileSystem, ISettingsHandler settingsHandler)
         {
             _fileSystem = fileSystem;
-            _settings = settings;
+            _settingsHandler = settingsHandler;
         }
 
         public IEnumerable<Game> Run(string directory, bool returnBlacklisted=false)
@@ -24,12 +24,13 @@ namespace GameNote.Core.GameList
             if (files.Any() == false)
                 throw new System.Exception($"No files found within directory {directory}");
 
-            var blacklist = new ExecutableBlacklist();            
+            var blacklist = new ExecutableBlacklist();          
+            var settings = _settingsHandler.Load();  
 
             var result = new List<Game>();
             foreach(var file in files)
             {
-                bool isAlreadyConfigured = _settings.HasSettings(file);
+                bool isAlreadyConfigured = settings.HasSettings(file);
                 bool isBlacklisted = blacklist.IsInBlackList(file);
 
                 if (isAlreadyConfigured == true)

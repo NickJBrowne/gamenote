@@ -15,13 +15,20 @@ namespace GameNote.CLI
     {
         static int Main(string[] args)
         {            
-            var settings = new Settings();
+            var settingsHandler = new SettingsHandler(
+                Path.Combine(
+                    Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
+                    "GameNote"
+                )
+            );
+            var settings = settingsHandler.Load();
 
             var services = new ServiceCollection()
                 .AddTransient<GetGamesInDirectory>()
+                .AddTransient<GameSettingBuilder>()
                 .AddTransient<IFileSystemHandler, FileSystemHandler>()
                 .AddTransient<IDialogHandler, DialogHandler>()
-                .AddSingleton(settings)
+                .AddSingleton<ISettingsHandler>(settingsHandler)
                 .BuildServiceProvider();
 
             try
@@ -29,7 +36,11 @@ namespace GameNote.CLI
                 var app = new CommandLineApplication()
                 {
                     FullName = "GameNote Command Line Interface",
+                    ShortVersionGetter = () => $"v{typeof(Settings).Assembly.GetName().Version}"
                 };
+
+                Console.WriteLine(app.GetFullNameAndVersion());
+                Console.WriteLine();
 
                 app.HelpOption();
                 app.Command("game", gameCommand => {
@@ -73,12 +84,27 @@ namespace GameNote.CLI
                             .Option("-fn|--filename", "The name of the file, use this in junction with -f|--f command", CommandOptionType.SingleValue);
 
                         var onCloseAction = addCommand
-                            .Option("-oc|--on-close", "Either open a url or run an application. Use the -a|--args args value to specify details", CommandOptionType.SingleValue)
+                            .Option("-oc|--on-close", "Either open a url or run an application. Use the -a|--args args value to specify details. Either 'open-url' to open a web page or 'open-exe' to open a program", CommandOptionType.SingleValue)
                             .IsRequired();
 
                         var args = addCommand
                             .Option("-a|--args", "On close arguments", CommandOptionType.SingleValue)
                             .IsRequired();
+
+                        addCommand.OnExecute(() => {
+                            var builder = services.GetRequiredService<GameSettingBuilder>();
+
+                            if (directPath.HasValue())
+                                builder.FromFullPath(directPath.Value());
+                            else if (folder.HasValue() && exeName.HasValue())
+                                builder.WithinDirectory(folder.Value(), exeName.Value());
+                            else
+                                throw new Exception("You must specify either a direct file path or a folder path and a file name");
+
+                            builder.SetOnGameCloseAction(onCloseAction.Value(), args.Value());
+                            string fileName = builder.Build();
+                            Console.WriteLine($"Added game: {fileName}");
+                        });
                     });
                     // Remove game
                     // Change game

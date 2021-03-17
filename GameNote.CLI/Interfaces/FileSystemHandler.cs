@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using GameNote.Core;
 using GameNote.Core.GameList;
 
 namespace GameNote.CLI.Interfaces
@@ -9,6 +10,9 @@ namespace GameNote.CLI.Interfaces
     {
         public bool DoesDirectoryExist(string path)
             => Directory.Exists(path);
+
+        public bool DoesFileExist(string path)
+            => File.Exists(path);
 
         public IEnumerable<FileInfo> GetExecutableFiles(string path)
             => Directory.GetFiles(
