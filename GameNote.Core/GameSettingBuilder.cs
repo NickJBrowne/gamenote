@@ -22,7 +22,7 @@ namespace GameNote.Core
 
         public GameSettingBuilder FromFullPath(string fullPath)
         {
-            if (_fileSystemHandler.DoesFileExist(fullPath))
+            if (_fileSystemHandler.DoesFileExist(fullPath) == false)
                 throw new System.Exception($"File does not exist {fullPath}");
 
             var fileInfo = new FileInfo(fullPath);

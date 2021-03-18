@@ -17,7 +17,9 @@ namespace GameNote.Core
             "Updater",
             "LogServer",
             "WatchDog",
-            "DirectXRedist"
+            "DirectXRedist",
+            "Install",
+            "dotNet"
         };
 
         public bool IsInBlackList(FileInfo file)

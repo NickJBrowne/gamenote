@@ -68,7 +68,7 @@ namespace GameNote.CLI
                         findCommand.Description = "Find potential executable files in a directory";
 
                         var directory = findCommand
-                            .Option("-d|--dir", "Directory to look in", CommandOptionType.SingleValue)
+                            .Option("-d|--dir|--directory", "Directory to look in", CommandOptionType.SingleValue)
                             .IsRequired();
 
                         findCommand.OnExecute(() => {
@@ -91,7 +91,7 @@ namespace GameNote.CLI
                             .Option("-p|--path", "Path to executable", CommandOptionType.SingleValue);
 
                         var folder = addCommand
-                            .Option("-f|--f", "Folder to look under", CommandOptionType.SingleValue);
+                            .Option("-d|--dir|--directory", "Folder to look under", CommandOptionType.SingleValue);
                         
                         var exeName = addCommand
                             .Option("-fn|--filename", "The name of the file, use this in junction with -f|--f command", CommandOptionType.SingleValue);

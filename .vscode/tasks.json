@@ -13,6 +13,18 @@
             ],
             "problemMatcher": "$msCompile"
         },
+        {
+            "label": "build-service",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "build",
+                "${workspaceFolder}/GameNote.Service/GameNote.Service.csproj",
+                "/property:GenerateFullPaths=true",
+                "/consoleloggerparameters:NoSummary"
+            ],
+            "problemMatcher": "$msCompile"
+        },
     ],
     "inputs": [
         {
