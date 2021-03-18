@@ -79,8 +79,6 @@ namespace GameNote.Service
             _gameLastIndex = _games.Count();
             _logger.LogInformation($"{_games.Count} games found");
         }
-
-
         private async void OnTimedEvent(Object source, ElapsedEventArgs e)
         {
             _timer.Stop();
@@ -118,6 +116,7 @@ namespace GameNote.Service
 
         private async Task WaitForFinish(Process game, GameCloseAction gameCloseAction, CancellationToken cancellationToken)
         {
+            _logger.LogInformation($"{game.ProcessName} is running...");
             await game.WaitForExitAsync(cancellationToken);
             _logger.LogInformation($"{game.ProcessName} has exited");
 
