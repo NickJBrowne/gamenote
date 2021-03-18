@@ -13,12 +13,9 @@ namespace GameNote.CLI
     {
         static int Main(string[] args)
         {            
-            var settingsHandler = new AppDataSettingsHandler();
-            var settings = settingsHandler.Load();
-
             var services = new ServiceCollection()
                 .AddGameNoteServices()
-                .AddSingletonSettingsHandler(settingsHandler)
+                .AddAppDataSettingsHandler()
                 .BuildServiceProvider();
 
             try
@@ -47,6 +44,7 @@ namespace GameNote.CLI
                        listCommand.Description = "Show a list of all games being monitored";
 
                        listCommand.OnExecute(() => {
+                            var settingsHandler = services.GetRequiredService<ISettingsHandler>();
                             var settings = settingsHandler.Load();
 
                             if (settings.Games.Any() == false)
@@ -74,11 +72,12 @@ namespace GameNote.CLI
                             .IsRequired();
 
                         findCommand.OnExecute(() => {
+                            Console.WriteLine($"Looking for games under {directory.Value()}");
                             var handler = services.GetRequiredService<GetGamesInDirectory>();
                             var result = handler.Run(directory.Value());
                             new ConsoleWriteTable<Game>(result)
                                 .AddColumn("File Name", x => x.Executable)
-                                .AddColumn("Full Path", x => x.FullPath, ConsoleWriteTable<Game>.ColumnAlign.Left)
+                                .AddColumn("Full Path", x => x.FullPath.Replace(directory.Value(), ""), ConsoleWriteTable<Game>.ColumnAlign.Left)
                                 .Write();
                             return 0;
                         });
@@ -128,8 +127,6 @@ namespace GameNote.CLI
                             return 0;
                         });
                     });
-                    // Remove game
-                    // Change game
                 });
 
                 app.OnExecute(() =>

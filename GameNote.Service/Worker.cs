@@ -47,7 +47,7 @@ namespace GameNote.Service
                 _logger.LogInformation("Worker running at: {time}", DateTimeOffset.Now);
                 await Task.Delay(1000, stoppingToken);
 
-                if (_settingsHandler.HasChanged())
+                if (_settingsHandler.HasChangedSinceLastLoad())
                 {
                     _logger.LogDebug("Settings file has been updated");
                     LoadOnCloseActions();
