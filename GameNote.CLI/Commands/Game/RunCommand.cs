@@ -10,13 +10,14 @@ namespace GameNote.CLI.Commands.Game
     class RunCommand : BaseCommand
     {
         private readonly ISettingsHandler _settingsHandler;
-
+        private readonly GameCloseDialog _dialogHandler;
         private readonly IGameCloseActionHandler _gameCloseActionHandler;
 
-        public RunCommand(ISettingsHandler settingsHandler, IGameCloseActionHandler gameCloseActionHandler)
+        public RunCommand(ISettingsHandler settingsHandler, IGameCloseActionHandler gameCloseActionHandler, GameCloseDialog dialogHandler)
         {
             _settingsHandler = settingsHandler;
             _gameCloseActionHandler = gameCloseActionHandler;
+            _dialogHandler = dialogHandler;
         }
 
         [Option(CommandOptionType.SingleValue, ShortName = "g", LongName = "game", Description = "The game whose on close you want to run")]
@@ -33,14 +34,12 @@ namespace GameNote.CLI.Commands.Game
             if (gameToRun == null)
                 return Fail($"No game found for: {Game}");  
 
-            if (gameToRun.GameCloseAction.Action == GameCloseActionEnum.DoNothing)
-            {
-                Message("Doing nothing...");
-                return Success();
-            }
+            var action = _dialogHandler.Ask(gameToRun.GameCloseAction);
+            _gameCloseActionHandler.Run(
+                new GameSetting(gameToRun.FilePath, action), 
+                (message) => Message(message)
+            );
 
-            SuccessMessage($"Found Game setting for {gameToRun.FileName}");
-            _gameCloseActionHandler.Run(gameToRun, (message) => Message(message));
             return Success();
         }
     }

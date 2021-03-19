@@ -12,12 +12,12 @@ namespace GameNote.Core
             return services
                 .AddTransient<GetGamesInDirectory>()
                 .AddTransient<GameSettingBuilder>()
+                .AddTransient<GameCloseDialog>()
                 .AddTransient<IFileSystemHandler, FileSystemHandler>()
-                .AddTransient<IDialogHandler, DialogHandler>()
                 .AddTransient<IGameCloseActionHandler, GameCloseActionHandler>();
         }
 
-        public static IServiceCollection AddPathToCLI(this IServiceCollection services, string path)
+        public static IServiceCollection ConfigurePathToCLI(this IServiceCollection services, string path)
         {
             services
                 .AddOptions<GameNoteConfiguration>()

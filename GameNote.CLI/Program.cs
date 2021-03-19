@@ -26,7 +26,7 @@ namespace GameNote.CLI
                     services
                         .AddGameNoteServices()
                         .AddAppDataSettingsHandler()
-                        .AddPathToCLI(Environment.CurrentDirectory)
+                        .ConfigurePathToCLI(Environment.CurrentDirectory)
                         .BuildServiceProvider();
                 });
 
