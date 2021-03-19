@@ -6,6 +6,7 @@ using FluentAssertions;
 using GameNote.Core.GameList;
 using Moq;
 using GameNote.Core.GameClose;
+using GameNote.Core.Settings;
 
 namespace GameNote.Core.UnitTests.UserStories.GameManagementTests
 {

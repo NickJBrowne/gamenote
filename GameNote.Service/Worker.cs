@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Timers;
 using GameNote.Core;
 using GameNote.Core.GameClose;
+using GameNote.Core.Settings;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
@@ -46,7 +47,7 @@ namespace GameNote.Service
             await base.StopAsync(cancellationToken);
         }
 
-        protected override async Task ExecuteAsync(CancellationToken stoppingToken)
+        protected override Task ExecuteAsync(CancellationToken stoppingToken)
         {
             try
             {
@@ -58,6 +59,8 @@ namespace GameNote.Service
                 _timer.Stop();
                 _logger.LogCritical(ex, "Error during Execution");
             }
+
+            return Task.FromResult(0);
         }
 
         private void LoadOnCloseActions()

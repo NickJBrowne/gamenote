@@ -1,5 +1,6 @@
 using System;
 using System.Diagnostics;
+using GameNote.Core.Settings;
 
 namespace GameNote.Core.GameClose
 {

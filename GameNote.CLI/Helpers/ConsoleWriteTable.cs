@@ -3,6 +3,18 @@ using System.Collections.Generic;
 
 namespace GameNote.CLI.Helpers
 {
+    public enum ColumnAlign
+    {
+        Left,
+        Center
+    }
+
+    public class ConsoleWriteTable
+    {
+        public static ConsoleWriteTable<T> New<T>(IEnumerable<T> list)
+            => new ConsoleWriteTable<T>(list);
+    }
+
     public class ConsoleWriteTable<T>
     {
         private readonly Dictionary<string, Func<T, string>> _columns = new Dictionary<string, Func<T, string>>();
@@ -15,12 +27,6 @@ namespace GameNote.CLI.Helpers
         public ConsoleWriteTable(IEnumerable<T> list)
         {
             _list = list;
-        }
-
-        public enum ColumnAlign 
-        {
-            Left,
-            Center
         }
 
         public ConsoleWriteTable<T> AddColumn(string columnName, Func<T, string> column, ColumnAlign align = ColumnAlign.Center)

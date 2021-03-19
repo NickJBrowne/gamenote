@@ -1,9 +1,9 @@
-namespace GameNote.Core
+namespace GameNote.Core.Settings
 {
     public interface ISettingsHandler
     {
-        Settings Load();
-        Settings Save(Settings settings);
+        GameNoteSettings Load();
+        GameNoteSettings Save(GameNoteSettings settings);
         bool HasChangedSinceLastLoad();
         string GetPathToSettingsFile();
     }

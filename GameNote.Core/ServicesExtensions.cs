@@ -1,5 +1,6 @@
 using GameNote.Core.GameClose;
 using GameNote.Core.GameList;
+using GameNote.Core.Settings;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace GameNote.Core

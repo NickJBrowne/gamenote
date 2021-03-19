@@ -1,6 +1,6 @@
 using GameNote.Core.GameClose;
 
-namespace GameNote.Core
+namespace GameNote.Core.Settings
 {
     public class GameSetting 
     {

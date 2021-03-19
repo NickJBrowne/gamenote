@@ -3,7 +3,7 @@ using System.IO;
 using System.Linq;
 using GameNote.Core.GameClose;
 
-namespace GameNote.Core
+namespace GameNote.Core.Settings
 {
     public class GameSettingBuilder
     {

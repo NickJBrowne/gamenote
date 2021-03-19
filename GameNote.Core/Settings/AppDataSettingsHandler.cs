@@ -2,7 +2,7 @@ using System;
 using System.IO;
 using Microsoft.Extensions.Options;
 
-namespace GameNote.Core
+namespace GameNote.Core.Settings
 {
     public class AppDataSettingsHandler : SettingsHandler, ISettingsHandler
     {

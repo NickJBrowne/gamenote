@@ -3,14 +3,14 @@ using System.IO;
 using System.Linq;
 using GameNote.Core.GameClose;
 
-namespace GameNote.Core
+namespace GameNote.Core.Settings
 {
-    public class Settings
+    public class GameNoteSettings
     {
         public List<GameSetting> Games { get; set; } = new List<GameSetting>();
         public string PathToCLI { get; set; }
 
-        public Settings(string pathToCLI)
+        public GameNoteSettings(string pathToCLI)
         {
             PathToCLI = pathToCLI;
         }
