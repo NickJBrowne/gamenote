@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 
 namespace GameNote.Core
@@ -12,12 +13,14 @@ namespace GameNote.Core
         private static string _settingName = "settings.json";
         private static DateTime? _lastWritten;
         private static IFileSystemHandler _fileSystemHandler;
+        private readonly string _pathToCLI = string.Empty;
 
-        public SettingsHandler(string directory, IFileSystemHandler fileSystemHandler)
+        public SettingsHandler(string directory, IFileSystemHandler fileSystemHandler, IOptions<Configuration> optionsConfiguration)
         {
             _directory = directory;
             _settingsFilePath = Path.Combine(directory, _settingName);
             _fileSystemHandler = fileSystemHandler;
+            _pathToCLI = optionsConfiguration.Value.PathToCLI;
         }
 
         public Settings Load()
@@ -31,7 +34,12 @@ namespace GameNote.Core
                     _lastWritten = _fileSystemHandler.GetLastWriteTime(_settingsFilePath);
                 }
                 else
-                    _settings = Save(new Settings());
+                {
+                    if (new CLIHandler(_pathToCLI).IsValidPath() == false)
+                        throw new Exception("Cannot create new settings because path to cli is missing");
+
+                    _settings = Save(new Settings(_pathToCLI));
+                }
             }
 
             return _settings;
@@ -60,5 +68,8 @@ namespace GameNote.Core
 
             return lastWritten > _lastWritten.Value;   
         }
+
+        public string GetPathToSettingsFile()
+            => _settingsFilePath;
     }
 }

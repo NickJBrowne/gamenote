@@ -25,7 +25,7 @@ namespace GameNote.Service
                 .ConfigureServices((hostContext, services) =>
                 {
                     services.AddHostedService<Worker>();
-                    services.AddGameNoteServices();
+                    services.AddPathToCLI("Unknown");
                     services.AddAppDataSettingsHandler();
                 });
     }

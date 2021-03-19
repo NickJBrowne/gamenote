@@ -1,15 +1,16 @@
 using System;
 using System.IO;
+using Microsoft.Extensions.Options;
 
 namespace GameNote.Core
 {
     public class AppDataSettingsHandler : SettingsHandler, ISettingsHandler
     {
-        public AppDataSettingsHandler(IFileSystemHandler fileSystemHandler)
+        public AppDataSettingsHandler(IFileSystemHandler fileSystemHandler, IOptions<Configuration> optionsConfiguration)
             : base(Path.Combine(
                     Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
                     "GameNote"
-                ), fileSystemHandler)
+                ), fileSystemHandler, optionsConfiguration)
         {
             
         }

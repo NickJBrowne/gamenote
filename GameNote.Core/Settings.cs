@@ -8,6 +8,12 @@ namespace GameNote.Core
     public class Settings
     {
         public List<GameSetting> Games { get; set; } = new List<GameSetting>();
+        public string PathToCLI { get; set; }
+
+        public Settings(string pathToCLI)
+        {
+            PathToCLI = pathToCLI;
+        }
 
         public void AddGame(string filePath, GameCloseAction closeAction)
         {
@@ -17,23 +23,19 @@ namespace GameNote.Core
             if (closeAction == null)
                 throw new System.ArgumentNullException("Close action must be specified");
 
-            Games.Add(new GameSetting()
-            {
-                FilePath = filePath,
-                GameCloseAction = closeAction
-            });
+            Games.Add(new GameSetting(filePath, closeAction));
         }
+
+        public GameSetting FindGame(string fileName)
+            => Games.SingleOrDefault(g => g.FileName.ToLower() == fileName.ToLower());
 
         public bool HasGames()
             => this.Games.Any();
 
         public bool HasSettings(FileInfo fileInfo)
-            => this.Games.Any(g => g.FilePath == fileInfo.FullName);
+            => this.Games.Any(g => g.FilePath.ToLower() == fileInfo.FullName.ToLower());
 
-        public class GameSetting 
-        {
-            public string FilePath { get; set; }
-            public GameCloseAction GameCloseAction { get; set; }
-        }
+        public CLIHandler GetCLI()
+            => new CLIHandler(PathToCLI);
     }
 }

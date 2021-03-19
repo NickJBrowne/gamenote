@@ -18,14 +18,13 @@ namespace GameNote.Service
         private readonly ILogger<Worker> _logger;
         private readonly ISettingsHandler _settingsHandler;
         private System.Timers.Timer _timer;
-        private Dictionary<string, GameCloseAction> _games = new Dictionary<string, GameCloseAction>();
-        private int _gameLastIndex = 0;
+        private List<string> _games = new List<string>();
         private CancellationToken _stoppingToken;
 
         public Worker(ILogger<Worker> logger, ISettingsHandler settingsHandler)
         {
             _logger = logger;
-            this._settingsHandler = settingsHandler;
+            _settingsHandler = settingsHandler;
         }
 
         public override async Task StartAsync(CancellationToken cancellationToken)
@@ -72,11 +71,9 @@ namespace GameNote.Service
 
             _games = settings.Games
                 .Where(game => game.GameCloseAction.Action != GameCloseActionEnum.DoNothing)
-                .ToDictionary(
-                    game => Path.GetFileName(game.FilePath),
-                    game => game.GameCloseAction
-                );
-            _gameLastIndex = _games.Count();
+                .Select(game => Path.GetFileName(game.FileName))
+                .ToList();
+
             _logger.LogInformation($"{_games.Count} games found");
         }
         private async void OnTimedEvent(Object source, ElapsedEventArgs e)
@@ -88,9 +85,9 @@ namespace GameNote.Service
                 return;
             }
 
-            var (gameProcess, onCloseAction) = FindRunningProcess();
-            if (gameProcess != null && onCloseAction != null)
-                await WaitForFinish(gameProcess, onCloseAction, _stoppingToken);
+            var gameProcess = FindRunningProcess();
+            if (gameProcess != null)
+                await WaitForFinish(gameProcess, _stoppingToken);
 
             if (_settingsHandler.HasChangedSinceLastLoad())
             {
@@ -101,29 +98,32 @@ namespace GameNote.Service
             _timer.Start();
         }
 
-        private (Process, GameCloseAction) FindRunningProcess()
+        private Process FindRunningProcess()
         {
             foreach(var game in _games)
             {
-                var processes = Process.GetProcessesByName(Path.GetFileNameWithoutExtension(game.Key)).ToList();
-                var process = processes.FirstOrDefault(p => p.MainModule.FileName.EndsWith(game.Key));
+                var processes = Process.GetProcessesByName(Path.GetFileNameWithoutExtension(game)).ToList();
+                var process = processes.FirstOrDefault(p => p.MainModule.FileName.EndsWith(game));
                 if (process != null)
-                    return (process, game.Value);
+                    return process;
             }
 
-            return (null, null);
+            return null;
         }
 
-        private async Task WaitForFinish(Process game, GameCloseAction gameCloseAction, CancellationToken cancellationToken)
+        private async Task WaitForFinish(Process game, CancellationToken cancellationToken)
         {
             _logger.LogInformation($"{game.ProcessName} is running...");
             await game.WaitForExitAsync(cancellationToken);
             _logger.LogInformation($"{game.ProcessName} has exited");
 
-            if (gameCloseAction.Action == GameCloseActionEnum.OpenUrl)
-                Process.Start(new ProcessStartInfo("cmd", $"/c start {gameCloseAction.Arguments}") { CreateNoWindow = true });
-            else if (gameCloseAction.Action == GameCloseActionEnum.OpenProgram)
-                Process.Start(new ProcessStartInfo("cmd", $"{gameCloseAction.Arguments}") { CreateNoWindow = true });
+            var settings = _settingsHandler.Load();
+            var cli = settings.GetCLI();
+            
+            if (cli.IsValidPath() == false)
+                throw new Exception("Cannot run game because path to CLI is not provided in settings");
+
+            cli.GameRun(game.ProcessName);
         }
     }
 }

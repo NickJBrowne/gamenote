@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using GameNote.CLI.Helpers;
 using GameNote.Core;
+using GameNote.Core.GameClose;
 using GameNote.Core.GameList;
 using McMaster.Extensions.CommandLineUtils;
 using Microsoft.Extensions.DependencyInjection;
@@ -16,6 +18,7 @@ namespace GameNote.CLI
             var services = new ServiceCollection()
                 .AddGameNoteServices()
                 .AddAppDataSettingsHandler()
+                .AddPathToCLI(Environment.CurrentDirectory)
                 .BuildServiceProvider();
 
             try
@@ -53,9 +56,9 @@ namespace GameNote.CLI
                                 return 0;
                             }
 
-                            new ConsoleWriteTable<Settings.GameSetting>(settings.Games)
+                            new ConsoleWriteTable<GameSetting>(settings.Games)
                                 .AddColumn("File Name", g => Path.GetFileName(g.FilePath))
-                                .AddColumn("File Path", g => g.FilePath, ConsoleWriteTable<Settings.GameSetting>.ColumnAlign.Left)
+                                .AddColumn("File Path", g => g.FilePath, ConsoleWriteTable<GameSetting>.ColumnAlign.Left)
                                 .AddColumn("OnCloseAction", g => g.GameCloseAction.Action.ToString())
                                 .AddColumn("Arguments", g => g.GameCloseAction.Arguments)
                                 .Write();
@@ -68,7 +71,7 @@ namespace GameNote.CLI
                         findCommand.Description = "Find potential executable files in a directory";
 
                         var directory = findCommand
-                            .Option("-d|--dir|--directory", "Directory to look in", CommandOptionType.SingleValue)
+                            .Option("-d|--directory", "Directory to look in", CommandOptionType.SingleValue)
                             .IsRequired();
 
                         findCommand.OnExecute(() => {
@@ -91,7 +94,7 @@ namespace GameNote.CLI
                             .Option("-p|--path", "Path to executable", CommandOptionType.SingleValue);
 
                         var folder = addCommand
-                            .Option("-d|--dir|--directory", "Folder to look under", CommandOptionType.SingleValue);
+                            .Option("-d|--directory", "Folder to look under", CommandOptionType.SingleValue);
                         
                         var exeName = addCommand
                             .Option("-fn|--filename", "The name of the file, use this in junction with -f|--f command", CommandOptionType.SingleValue);
@@ -125,6 +128,64 @@ namespace GameNote.CLI
                             string fileName = builder.Build();
                             Console.WriteLine($"Added game: {fileName}");
                             return 0;
+                        });
+                    });
+
+                    gameCommand.Command("run", runCommand => {
+                        runCommand.HelpOption();
+                        runCommand.Description = "Run the game close action for a game";
+
+                        var game = runCommand
+                            .Option("-g|--game", "The name of the game executable", CommandOptionType.SingleValue)
+                            .IsRequired();
+
+                        runCommand.OnExecute(() => {
+                            var settingsHandler = services.GetRequiredService<ISettingsHandler>(); 
+                            var settings = settingsHandler.Load();
+
+                            var gameToRun = settings.FindGame(game.Value());
+                            if (gameToRun == null)
+                            {
+                                Console.WriteLine($"No game found for: {game.Value()}");   
+                                return 1;
+                            }
+
+                            if (gameToRun.GameCloseAction.Action == GameCloseActionEnum.DoNothing)
+                            {
+                                Console.WriteLine("Doing nothing...");
+                                return 1;
+                            }
+
+                            Console.WriteLine($"Found Game setting for {gameToRun.FileName}");
+
+                            var closeActionHandler = services.GetRequiredService<IGameCloseActionHandler>();
+                            closeActionHandler.Run(gameToRun);
+                            return 0;
+                        });
+                    });
+                });
+
+                app.Command("settings", settingsCommand => {
+                    settingsCommand.HelpOption();
+                    settingsCommand.Description = "Actions for the settings setup for GameNote";
+
+                    settingsCommand.OnExecute(() =>
+                    {
+                        Console.WriteLine("Specify a subcommand");
+                        settingsCommand.ShowHelp();
+                        return 1;
+                    });
+
+                    settingsCommand.Command("open-folder", openFolderCommand => {
+                        openFolderCommand.HelpOption();
+                        openFolderCommand.Description = "Open the folder where the settings file is stored";
+
+                        openFolderCommand.OnExecute(() => {
+                            var settingsHandler = services.GetRequiredService<ISettingsHandler>();
+                            string pathToSettingsFile = settingsHandler.GetPathToSettingsFile();
+
+                            Console.WriteLine($"Settings file found: {pathToSettingsFile}");
+                            Process.Start("explorer.exe", Path.GetDirectoryName(pathToSettingsFile));
                         });
                     });
                 });

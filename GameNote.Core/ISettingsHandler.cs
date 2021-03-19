@@ -5,5 +5,6 @@ namespace GameNote.Core
         Settings Load();
         Settings Save(Settings settings);
         bool HasChangedSinceLastLoad();
+        string GetPathToSettingsFile();
     }
 }
