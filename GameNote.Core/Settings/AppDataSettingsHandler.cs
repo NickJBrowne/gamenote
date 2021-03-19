@@ -6,7 +6,7 @@ namespace GameNote.Core.Settings
 {
     public class AppDataSettingsHandler : SettingsHandler, ISettingsHandler
     {
-        public AppDataSettingsHandler(IFileSystemHandler fileSystemHandler, IOptions<Configuration> optionsConfiguration)
+        public AppDataSettingsHandler(IFileSystemHandler fileSystemHandler, IOptions<GameNoteConfiguration> optionsConfiguration)
             : base(Path.Combine(
                     Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
                     "GameNote"

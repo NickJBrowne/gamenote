@@ -15,7 +15,7 @@ namespace GameNote.Core.Settings
         private static IFileSystemHandler _fileSystemHandler;
         private readonly string _pathToCLI = string.Empty;
 
-        public SettingsHandler(string directory, IFileSystemHandler fileSystemHandler, IOptions<Configuration> optionsConfiguration)
+        public SettingsHandler(string directory, IFileSystemHandler fileSystemHandler, IOptions<GameNoteConfiguration> optionsConfiguration)
         {
             _directory = directory;
             _settingsFilePath = Path.Combine(directory, _settingName);

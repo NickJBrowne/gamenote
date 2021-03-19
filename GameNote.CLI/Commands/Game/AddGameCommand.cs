@@ -21,7 +21,7 @@ namespace GameNote.CLI.Commands.Game
         [Option(CommandOptionType.SingleValue, ShortName = "d", LongName = "directory", Description = "A directory to look under, use with -exe|--file-name")]
         public string Directory { get; set; }
 
-        [Option(CommandOptionType.SingleValue, ShortName = "e", LongName = "exe", Description = "The name of the file to look for under the directory, use with -d|--directory")]
+        [Option(CommandOptionType.SingleValue, ShortName = "g", LongName = "game", Description = "The name of the file to look for under the directory, use with -d|--directory")]
         public string FileName { get; set; }
 
         [Option(CommandOptionType.SingleValue, ShortName = "u", LongName = "url", Description = "The url to open when the game closes")]

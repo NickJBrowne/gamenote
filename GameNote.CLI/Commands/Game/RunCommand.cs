@@ -39,8 +39,8 @@ namespace GameNote.CLI.Commands.Game
                 return Success();
             }
 
-            Message($"Found Game setting for {gameToRun.FileName}");
-            _gameCloseActionHandler.Run(gameToRun);
+            SuccessMessage($"Found Game setting for {gameToRun.FileName}");
+            _gameCloseActionHandler.Run(gameToRun, (message) => Message(message));
             return Success();
         }
     }

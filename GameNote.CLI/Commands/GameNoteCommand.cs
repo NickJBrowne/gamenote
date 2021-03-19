@@ -5,7 +5,7 @@ using McMaster.Extensions.CommandLineUtils;
 
 namespace GameNote.CLI.Commands
 {
-    [Command(Name = "gamenote")]
+    [Command(Name = "gamenote", FullName = "GameNote CLI")]
     [Subcommand(
         typeof(BaseGameCommand),
         typeof(BaseSettingsCommand)

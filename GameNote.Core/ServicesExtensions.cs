@@ -20,7 +20,7 @@ namespace GameNote.Core
         public static IServiceCollection AddPathToCLI(this IServiceCollection services, string path)
         {
             services
-                .AddOptions<Configuration>()
+                .AddOptions<GameNoteConfiguration>()
                 .Configure(configureOptions => configureOptions.PathToCLI = path);
 
             return services;

@@ -6,16 +6,16 @@ namespace GameNote.Core.GameClose
 {
     public class GameCloseActionHandler : IGameCloseActionHandler
     {
-        public void Run(GameSetting gameToRun)
+        public void Run(GameSetting gameToRun, Action<string> loggerHandler)
         {
             switch (gameToRun.GameCloseAction.Action)
             {
                 case GameCloseActionEnum.OpenProgram:
-                    OpenProgram(gameToRun);
+                    OpenProgram(gameToRun, loggerHandler);
                     break;
 
                 case GameCloseActionEnum.OpenUrl:
-                    OpenUrl(gameToRun);
+                    OpenUrl(gameToRun, loggerHandler);
                     break;
 
                 case GameCloseActionEnum.DoNothing:
@@ -27,13 +27,15 @@ namespace GameNote.Core.GameClose
             }
         }
 
-        private void OpenUrl(GameSetting gameToRun)
+        private void OpenUrl(GameSetting gameToRun, Action<string> loggerHandler)
         {
+            loggerHandler.Invoke($"Opening URL: {gameToRun.GameCloseAction.Arguments}");
             Process.Start(new ProcessStartInfo("cmd", $"/c start {gameToRun.GameCloseAction.Arguments}") { CreateNoWindow = true });
         }
 
-        private void OpenProgram(GameSetting gameToRun)
+        private void OpenProgram(GameSetting gameToRun, Action<string> loggerHandler)
         {
+            loggerHandler.Invoke($"Running command: {gameToRun.GameCloseAction.Arguments}");
             Process.Start(new ProcessStartInfo("cmd", $"{gameToRun.GameCloseAction.Arguments}") { CreateNoWindow = true });
         }
     }

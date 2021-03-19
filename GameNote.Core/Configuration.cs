@@ -1,6 +1,6 @@
 namespace GameNote.Core
 {
-    public class Configuration
+    public class GameNoteConfiguration
     {
         public string PathToCLI { get; set; }
     }
