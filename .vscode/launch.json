@@ -2,20 +2,15 @@
     "version": "0.2.0",
     "configurations": [
         {
-            // Use IntelliSense to find out which attributes exist for C# debugging
-            // Use hover for the description of the existing attributes
-            // For further information visit https://github.com/OmniSharp/omnisharp-vscode/blob/master/debugger-launchjson.md
-            "name": ".NET Core Launch (console)",
+            "name": "Service",
             "type": "coreclr",
             "request": "launch",
-            "preLaunchTask": "build",
-            // If you have changed target frameworks, make sure to update the program path.
-            "program": "${workspaceFolder}/GameNote.Core.UnitTests/bin/Debug/net5.0/GameNote.Core.UnitTests.dll",
+            "preLaunchTask": "build-service",
+            "program": "${workspaceFolder}/GameNote.Service/bin/Debug/net5.0/GameNote.Service.dll",
             "args": [],
-            "cwd": "${workspaceFolder}/GameNote.Core.UnitTests",
-            // For more information about the 'console' field, see https://aka.ms/VSCode-CS-LaunchJson-Console
-            "console": "internalConsole",
-            "stopAtEntry": false
+            "cwd": "${workspaceFolder}",
+            "stopAtEntry": false,
+            "console": "internalConsole"
         },
         {
             "name": ".NET Core Attach",
