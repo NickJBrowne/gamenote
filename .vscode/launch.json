@@ -2,6 +2,20 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "name": "CLI",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build",
+            "program": "${workspaceFolder}/GameNote.CLI/bin/Debug/net5.0/GameNote.CLI.dll",
+            "args": [
+                "game",
+                "list"
+            ],
+            "cwd": "${workspaceFolder}",
+            "stopAtEntry": false,
+            "console": "internalConsole"
+        },
+        {
             "name": "Service",
             "type": "coreclr",
             "request": "launch",

@@ -7,7 +7,8 @@ namespace GameNote.CLI
     {
         public GameNote.Core.DialogResult AskYesNo(string question)
         {
-            throw new NotImplementedException();
+            Console.WriteLine("Ask something");
+            return GameNote.Core.DialogResult.Yes;
         }
     }
 }
