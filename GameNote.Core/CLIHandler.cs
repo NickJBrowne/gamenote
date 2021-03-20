@@ -5,8 +5,8 @@ namespace GameNote.Core
 {
     public class CLIHandler
     {
-        private readonly string _pathToCLI = string.Empty;
         private readonly bool _isValid = false;
+        private readonly string _pathToCLI = string.Empty;
 
         public CLIHandler(string pathToCLI)
         {
@@ -21,18 +21,19 @@ namespace GameNote.Core
             }
         }
 
-        public bool IsValidPath()
-            => _isValid;
-
-        public void GameRun(string gameName)
-            => ExecuteCommand($"game run --game {gameName}");
-
         public void ExecuteCommand(string arguments)
         {
             Process.Start(new ProcessStartInfo(
-                _pathToCLI, 
+                _pathToCLI,
                 arguments
-            ) { CreateNoWindow = true });
+            )
+            { CreateNoWindow = true });
         }
+
+        public void GameRun(string gameName, bool force = false)
+            => ExecuteCommand($"game run --game {gameName} {(force == true ? "--force" : "")}");
+
+        public bool IsValidPath()
+            => _isValid;
     }
 }

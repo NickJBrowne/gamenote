@@ -1,17 +1,19 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.26124.0
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30907.101
 MinimumVisualStudioVersion = 15.0.26124.0
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameNote.Core", "GameNote.Core\GameNote.Core.csproj", "{9E00BE3E-BA13-4969-8751-8ADEDF6EE637}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GameNote.Core", "GameNote.Core\GameNote.Core.csproj", "{9E00BE3E-BA13-4969-8751-8ADEDF6EE637}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameNote.Core.UnitTests", "GameNote.Core.UnitTests\GameNote.Core.UnitTests.csproj", "{DE7D8910-AF3C-4B87-8672-B5C2CFE40B8E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GameNote.Core.UnitTests", "GameNote.Core.UnitTests\GameNote.Core.UnitTests.csproj", "{DE7D8910-AF3C-4B87-8672-B5C2CFE40B8E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Helpers", "Helpers\Helpers.csproj", "{CE3EB719-3953-4669-8456-2D33CA030005}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Helpers", "Helpers\Helpers.csproj", "{CE3EB719-3953-4669-8456-2D33CA030005}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameNote.CLI", "GameNote.CLI\GameNote.CLI.csproj", "{E224D6B3-6A4F-472D-98C2-C6CE32117012}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GameNote.CLI", "GameNote.CLI\GameNote.CLI.csproj", "{E224D6B3-6A4F-472D-98C2-C6CE32117012}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameNote.Service", "GameNote.Service\GameNote.Service.csproj", "{5C57C11C-ECA2-422D-94AA-B4B9C257FEE5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GameNote.Service", "GameNote.Service\GameNote.Service.csproj", "{5C57C11C-ECA2-422D-94AA-B4B9C257FEE5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameNote.WinConfirm", "GameNote.WinConfirm\GameNote.WinConfirm.csproj", "{85A2FB9E-7609-4FDC-9D94-84DA4709D542}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,9 +23,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 		Release|x64 = Release|x64
 		Release|x86 = Release|x86
-	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{9E00BE3E-BA13-4969-8751-8ADEDF6EE637}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -86,5 +85,23 @@ Global
 		{5C57C11C-ECA2-422D-94AA-B4B9C257FEE5}.Release|x64.Build.0 = Release|Any CPU
 		{5C57C11C-ECA2-422D-94AA-B4B9C257FEE5}.Release|x86.ActiveCfg = Release|Any CPU
 		{5C57C11C-ECA2-422D-94AA-B4B9C257FEE5}.Release|x86.Build.0 = Release|Any CPU
+		{85A2FB9E-7609-4FDC-9D94-84DA4709D542}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{85A2FB9E-7609-4FDC-9D94-84DA4709D542}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{85A2FB9E-7609-4FDC-9D94-84DA4709D542}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{85A2FB9E-7609-4FDC-9D94-84DA4709D542}.Debug|x64.Build.0 = Debug|Any CPU
+		{85A2FB9E-7609-4FDC-9D94-84DA4709D542}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{85A2FB9E-7609-4FDC-9D94-84DA4709D542}.Debug|x86.Build.0 = Debug|Any CPU
+		{85A2FB9E-7609-4FDC-9D94-84DA4709D542}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{85A2FB9E-7609-4FDC-9D94-84DA4709D542}.Release|Any CPU.Build.0 = Release|Any CPU
+		{85A2FB9E-7609-4FDC-9D94-84DA4709D542}.Release|x64.ActiveCfg = Release|Any CPU
+		{85A2FB9E-7609-4FDC-9D94-84DA4709D542}.Release|x64.Build.0 = Release|Any CPU
+		{85A2FB9E-7609-4FDC-9D94-84DA4709D542}.Release|x86.ActiveCfg = Release|Any CPU
+		{85A2FB9E-7609-4FDC-9D94-84DA4709D542}.Release|x86.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E89E1F32-B8B8-47C6-9099-9F058A33B56D}
 	EndGlobalSection
 EndGlobal

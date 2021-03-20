@@ -7,11 +7,17 @@ using McMaster.Extensions.CommandLineUtils;
 namespace GameNote.CLI.Commands.Game
 {
     [Command(Name = "run", Description = "Run the on close action for a game")]
-    class RunCommand : BaseCommand
+    internal class RunCommand : BaseCommand
     {
-        private readonly ISettingsHandler _settingsHandler;
         private readonly GameCloseDialog _dialogHandler;
         private readonly IGameCloseActionHandler _gameCloseActionHandler;
+        private readonly ISettingsHandler _settingsHandler;
+
+        [Option(CommandOptionType.SingleValue, ShortName = "f", LongName = "force", Description = "Force through the action without checking for the users input")]
+        public bool Force { get; set; } = false;
+
+        [Option(CommandOptionType.SingleValue, ShortName = "g", LongName = "game", Description = "The game whose on close you want to run")]
+        public string Game { get; set; }
 
         public RunCommand(ISettingsHandler settingsHandler, IGameCloseActionHandler gameCloseActionHandler, GameCloseDialog dialogHandler)
         {
@@ -19,9 +25,6 @@ namespace GameNote.CLI.Commands.Game
             _gameCloseActionHandler = gameCloseActionHandler;
             _dialogHandler = dialogHandler;
         }
-
-        [Option(CommandOptionType.SingleValue, ShortName = "g", LongName = "game", Description = "The game whose on close you want to run")]
-        public string Game { get; set; }
 
         protected override Task<int> OnExecute(CommandLineApplication app)
         {
@@ -32,13 +35,21 @@ namespace GameNote.CLI.Commands.Game
 
             var gameToRun = settings.FindGame(Game);
             if (gameToRun == null)
-                return Fail($"No game found for: {Game}");  
+                return Fail($"No game found for: {Game}");
 
-            var action = _dialogHandler.Ask(gameToRun.GameCloseAction);
-            _gameCloseActionHandler.Run(
-                new GameSetting(gameToRun.FilePath, action), 
-                (message) => Message(message)
-            );
+            if (Force == false)
+            {
+                var action = _dialogHandler.Ask(gameToRun.GameCloseAction);
+                _gameCloseActionHandler.Run(
+                    new GameSetting(gameToRun.FilePath, action),
+                    (message) => Message(message)
+                );
+            }
+            else
+                _gameCloseActionHandler.Run(
+                    gameToRun,
+                    (message) => Message(message)
+                );
 
             return Success();
         }
