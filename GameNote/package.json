@@ -4,6 +4,7 @@
   "description": "",
   "main": "main.js",
   "scripts": {
+    "build:react": "webpack --mode development --config webpack.react.config.js",
     "build": "webpack --mode development",
     "start": "electron ./dist/main.js"
   },
