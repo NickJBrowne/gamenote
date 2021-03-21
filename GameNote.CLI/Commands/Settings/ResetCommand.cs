@@ -32,9 +32,7 @@ namespace GameNote.CLI.Commands.Settings
                 Message($"File at {path} is deleted");
             }
 
-            var settings = new GameNoteSettings(Environment.CurrentDirectory);
-            Message($" - CLI is expected to exist within {settings.PathToCLI}");
-
+            var settings = new GameNoteSettings();
             _settingsHandler.Save(settings);
             Message($"Created new settings file");
 

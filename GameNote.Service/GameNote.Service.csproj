@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk.Worker">
 
   <PropertyGroup>
-    <TargetFramework>net5.0</TargetFramework>
+    <TargetFramework>net5.0-windows</TargetFramework>
     <UserSecretsId>dotnet-GameNote.Service-705EEE51-9726-4BD8-BFEE-4F43BFA64EA3</UserSecretsId>
   </PropertyGroup>
 
@@ -11,5 +11,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\GameNote.Core\GameNote.Core.csproj" />
+    <ProjectReference Include="..\GameNote.CLI\GameNote.CLI.csproj" />
   </ItemGroup>
 </Project>

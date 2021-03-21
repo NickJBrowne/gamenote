@@ -17,15 +17,6 @@ namespace GameNote.Core
                 .AddTransient<IGameCloseActionHandler, GameCloseActionHandler>();
         }
 
-        public static IServiceCollection ConfigurePathToCLI(this IServiceCollection services, string path)
-        {
-            services
-                .AddOptions<GameNoteConfiguration>()
-                .Configure(configureOptions => configureOptions.PathToCLI = path);
-
-            return services;
-        }
-
         public static IServiceCollection AddAppDataSettingsHandler(this IServiceCollection services)
             => services.AddTransient<ISettingsHandler, AppDataSettingsHandler>();
     }

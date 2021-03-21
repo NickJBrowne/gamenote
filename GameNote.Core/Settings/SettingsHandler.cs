@@ -13,14 +13,12 @@ namespace GameNote.Core.Settings
         private static string _settingName = "settings.json";
         private static DateTime? _lastWritten;
         private static IFileSystemHandler _fileSystemHandler;
-        private readonly string _pathToCLI = string.Empty;
 
-        public SettingsHandler(string directory, IFileSystemHandler fileSystemHandler, IOptions<GameNoteConfiguration> optionsConfiguration)
+        public SettingsHandler(string directory, IFileSystemHandler fileSystemHandler)
         {
             _directory = directory;
             _settingsFilePath = Path.Combine(directory, _settingName);
             _fileSystemHandler = fileSystemHandler;
-            _pathToCLI = optionsConfiguration.Value.PathToCLI;
         }
 
         public GameNoteSettings Load()
@@ -35,10 +33,10 @@ namespace GameNote.Core.Settings
                 }
                 else
                 {
-                    if (new CLIHandler(_pathToCLI).IsValidPath() == false)
+                    if (new CLIHandler(AppContext.BaseDirectory).IsValidPath() == false)
                         throw new Exception("Cannot create new settings because path to cli is missing");
 
-                    _settings = Save(new GameNoteSettings(_pathToCLI));
+                    _settings = Save(new GameNoteSettings());
                 }
             }
 

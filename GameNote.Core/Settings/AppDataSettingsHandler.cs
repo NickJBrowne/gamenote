@@ -6,11 +6,11 @@ namespace GameNote.Core.Settings
 {
     public class AppDataSettingsHandler : SettingsHandler, ISettingsHandler
     {
-        public AppDataSettingsHandler(IFileSystemHandler fileSystemHandler, IOptions<GameNoteConfiguration> optionsConfiguration)
+        public AppDataSettingsHandler(IFileSystemHandler fileSystemHandler)
             : base(Path.Combine(
                     Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
                     "GameNote"
-                ), fileSystemHandler, optionsConfiguration)
+                ), fileSystemHandler)
         {
             
         }

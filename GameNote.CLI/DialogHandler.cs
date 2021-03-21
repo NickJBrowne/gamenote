@@ -17,14 +17,14 @@ namespace GameNote.CLI
 
         public GameNote.Core.DialogResult AskYesNo(string question)
         {
-            var settings = _settingsHandler.Load();
+            /*var settings = _settingsHandler.Load();
 
             Application.EnableVisualStyles();
             var dialog = new CheckDialog(question);
             Application.Run(dialog);
 
             dialog.
-
+            */
             return GameNote.Core.DialogResult.Yes;
         }
     }

@@ -105,8 +105,13 @@ namespace GameNote.Service
         {
             foreach(var game in _games)
             {
+                string gameName = game.Replace(".exe", "");
                 var processes = Process.GetProcessesByName(Path.GetFileNameWithoutExtension(game)).ToList();
-                var process = processes.FirstOrDefault(p => p.MainModule.FileName.EndsWith(game));
+                
+                if (processes.Count == 0)
+                    continue;
+
+                var process = processes.FirstOrDefault(p => p.ProcessName == gameName);
                 if (process != null)
                     return process;
             }
@@ -120,8 +125,7 @@ namespace GameNote.Service
             await game.WaitForExitAsync(cancellationToken);
             _logger.LogInformation($"{game.ProcessName} has exited");
 
-            var settings = _settingsHandler.Load();
-            var cli = settings.GetCLI();
+            var cli = new CLIHandler(AppContext.BaseDirectory);
             
             if (cli.IsValidPath() == false)
                 throw new Exception("Cannot run game because path to CLI is not provided in settings");

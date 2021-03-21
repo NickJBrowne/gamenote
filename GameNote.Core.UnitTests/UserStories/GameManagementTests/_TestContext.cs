@@ -7,6 +7,6 @@ namespace GameNote.Core.UnitTests.UserStories.GameManagementTests
     public class GameManagementContext
     {
         public List<Game> GameList { get; set; }
-        public GameNoteSettings Settings { get; set; } = new GameNoteSettings("/Path/To/CLI");
+        public GameNoteSettings Settings { get; set; } = new GameNoteSettings();
     }
 }

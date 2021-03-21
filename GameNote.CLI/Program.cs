@@ -27,7 +27,6 @@ namespace GameNote.CLI
                         .AddGameNoteServices()
                         .AddAppDataSettingsHandler()
                         .AddTransient<IDialogHandler, DialogHandler>()
-                        .ConfigurePathToCLI(Environment.CurrentDirectory)
                         .BuildServiceProvider();
                 });
 

@@ -8,12 +8,6 @@ namespace GameNote.Core.Settings
     public class GameNoteSettings
     {
         public List<GameSetting> Games { get; set; } = new List<GameSetting>();
-        public string PathToCLI { get; set; }
-
-        public GameNoteSettings(string pathToCLI)
-        {
-            PathToCLI = pathToCLI;
-        }
 
         public void AddGame(string filePath, GameCloseAction closeAction)
         {
@@ -34,8 +28,5 @@ namespace GameNote.Core.Settings
 
         public bool HasSettings(FileInfo fileInfo)
             => this.Games.Any(g => g.FilePath.ToLower() == fileInfo.FullName.ToLower());
-
-        public CLIHandler GetCLI()
-            => new CLIHandler(PathToCLI);
     }
 }

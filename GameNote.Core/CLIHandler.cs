@@ -7,6 +7,7 @@ namespace GameNote.Core
     {
         private readonly bool _isValid = false;
         private readonly string _pathToCLI = string.Empty;
+        private const string _cliFileName = "GameNote.CLI.exe";
 
         public CLIHandler(string pathToCLI)
         {
@@ -16,7 +17,7 @@ namespace GameNote.Core
                 _isValid = false;
             else
             {
-                _pathToCLI = Path.Combine(_pathToCLI, "GameNote.CLI.exe");
+                _pathToCLI = Path.Combine(_pathToCLI, _cliFileName);
                 _isValid = File.Exists(_pathToCLI);
             }
         }
