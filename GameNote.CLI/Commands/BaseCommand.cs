@@ -15,6 +15,12 @@ namespace GameNote.CLI.Commands
         public Task<int> Success()
             => Task.FromResult(0);
 
+        public Task<int> Success(string message)
+        {
+            SuccessMessage(message);
+            return Success();
+        }
+
         public Task<int> Fail()
             => Task.FromResult(1);
 

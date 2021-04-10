@@ -12,10 +12,12 @@ namespace GameNote.WindowsConfirm
 {
     public partial class ConfirmDialog : Form
     {
+        private string _question = string.Empty;
         public bool SelectedYes { get; set; } = false;
 
-        public ConfirmDialog()
+        public ConfirmDialog(string question)
         {
+            _question = question;
             InitializeComponent();
         }
 
@@ -42,7 +44,7 @@ namespace GameNote.WindowsConfirm
 
         private void ConfirmDialog_Load(object sender, EventArgs e)
         {
-            StartPosition = FormStartPosition.CenterScreen;
+            lblQuestion.Text = _question;
         }
     }
 }

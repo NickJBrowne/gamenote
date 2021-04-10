@@ -12,7 +12,6 @@ namespace GameNote.Core
             return services
                 .AddTransient<GetGamesInDirectory>()
                 .AddTransient<GameSettingBuilder>()
-                .AddTransient<GameCloseDialog>()
                 .AddTransient<IFileSystemHandler, FileSystemHandler>()
                 .AddTransient<IGameCloseActionHandler, GameCloseActionHandler>();
         }

@@ -19,6 +19,7 @@ namespace GameNote.Core.GameClose
                     break;
 
                 case GameCloseActionEnum.DoNothing:
+                    loggerHandler.Invoke("Doing nothing");
                     // Do nothing
                     break; 
 

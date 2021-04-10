@@ -9,8 +9,9 @@
             "program": "${workspaceFolder}/GameNote.CLI/bin/Debug/net5.0-windows/GameNote.CLI.dll",
             "args": [
                 "game",
-                "run",
-                "-g", "SpaceCrew.exe"
+                "update",
+                "-g", "SpaceCrew.exe",
+                "-u", "https://bbc.co.uk/news"
             ],
             "cwd": "${workspaceFolder}",
             "stopAtEntry": false,

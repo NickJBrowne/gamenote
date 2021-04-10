@@ -2,7 +2,7 @@ using System;
 using System.Windows.Forms;
 using GameNote.Core;
 using GameNote.Core.Settings;
-using GameNote.WinConfirm;
+using GameNote.WindowsConfirm;
 
 namespace GameNote.CLI
 {
@@ -11,10 +11,13 @@ namespace GameNote.CLI
         public GameNote.Core.DialogResult AskYesNo(string question)
         {
             Application.EnableVisualStyles();
-            var dialog = new CheckDialog(question);
+            var dialog = new ConfirmDialog(question);
             Application.Run(dialog);
 
-            return GameNote.Core.DialogResult.Yes;
+            if (dialog.SelectedYes == true)
+                return GameNote.Core.DialogResult.Yes;
+            else
+                return GameNote.Core.DialogResult.No;
         }
     }
 }

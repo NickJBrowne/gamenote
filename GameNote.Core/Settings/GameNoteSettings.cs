@@ -17,7 +17,17 @@ namespace GameNote.Core.Settings
             if (closeAction == null)
                 throw new System.ArgumentNullException("Close action must be specified");
 
-            Games.Add(new GameSetting(filePath, closeAction));
+            var gameSettings = new GameSetting(filePath, closeAction);
+
+            if (Games.Any(g => g.FilePath == filePath))
+            {
+                var targetGame = Games.First(g => g.FilePath == filePath);
+                targetGame.FilePath = gameSettings.FilePath;
+                targetGame.FileName = gameSettings.FileName;
+                targetGame.GameCloseAction = gameSettings.GameCloseAction;                
+            }
+            else
+                Games.Add(gameSettings);
         }
 
         public GameSetting FindGame(string fileName)

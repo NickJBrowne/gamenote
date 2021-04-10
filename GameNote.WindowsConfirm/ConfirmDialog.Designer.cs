@@ -33,6 +33,7 @@ namespace GameNote.WindowsConfirm
             this.btnYes = new System.Windows.Forms.Button();
             this.btnNo = new System.Windows.Forms.Button();
             this.SuspendLayout();
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             // 
             // lblQuestion
             // 
@@ -76,9 +77,7 @@ namespace GameNote.WindowsConfirm
             this.Name = "ConfirmDialog";
             this.Text = "GameNote Confirmation";
             this.Load += new System.EventHandler(this.ConfirmDialog_Load);
-            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.ConfirmDialog_KeyDown);
             this.ResumeLayout(false);
-
         }
 
         #endregion

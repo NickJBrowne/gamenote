@@ -1,13 +1,9 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace GameNote.CLI.Helpers
 {
-    public enum ColumnAlign
-    {
-        Left,
-        Center
-    }
 
     public class ConsoleWriteTable
     {
@@ -18,9 +14,10 @@ namespace GameNote.CLI.Helpers
     public class ConsoleWriteTable<T>
     {
         private readonly Dictionary<string, Func<T, string>> _columns = new Dictionary<string, Func<T, string>>();
-        private readonly Dictionary<string, ColumnAlign> _columnAlign =new Dictionary<string, ColumnAlign>();
+        private readonly Dictionary<string, ColumnAlign> _columnAlign = new Dictionary<string, ColumnAlign>();
         private readonly IEnumerable<T> _list;
         private readonly Dictionary<string, int> _columnWidths = new Dictionary<string, int>();
+        private readonly List<RowColor<T>> _rowColours = new List<RowColor<T>>();
         private static int _padding = 2;
         private int _width = 1;
 
@@ -49,11 +46,23 @@ namespace GameNote.CLI.Helpers
             return this;
         }
 
+        public ConsoleWriteTable<T> AddColour(Func<T, bool> evaluator, ConsoleColor colour)
+        {
+            this._rowColours.Add(new RowColor<T>()
+            {
+                Evaluator = evaluator,
+                Colour = colour
+            });
+
+            return this;
+        }
+
         public void Write()
         {
-            string line = ConstructLine(_width);
+            string lineSeperator = ConstructLine(_width);
+            ConsoleColor originalColour = Console.ForegroundColor;
 
-            Console.WriteLine(line);
+            Console.WriteLine(lineSeperator);
             string headerLine = "|";
             foreach (var column in _columns)
             {
@@ -61,10 +70,11 @@ namespace GameNote.CLI.Helpers
                 headerLine += AlignCenter(column.Key, width) + "|";
             }
             Console.WriteLine(headerLine);
-            Console.WriteLine(line);
+            Console.WriteLine(lineSeperator);
 
-            foreach (var item in _list)
-            {
+            foreach (T item in _list)
+            {                
+                SetForegroundColour(item, originalColour);
                 string row = "|";
                 foreach (var column in _columns)
                 {
@@ -77,8 +87,9 @@ namespace GameNote.CLI.Helpers
                         row += AlignLeft(column.Value(item), width) + "|";
                 }
                 Console.WriteLine(row);
+                Console.ForegroundColor = originalColour;
             }
-            Console.WriteLine(line);
+            Console.WriteLine(lineSeperator);
         }
 
         private string AlignCenter(string text, int width)
@@ -105,6 +116,26 @@ namespace GameNote.CLI.Helpers
                 lineData += "-";
 
             return lineData;
+        }
+
+        private void SetForegroundColour(T item, ConsoleColor original)
+        {
+            if (_rowColours.Any() == false)
+            {
+                Console.ForegroundColor = original;
+                return;
+            }
+            
+            foreach (var colour in _rowColours)
+            {
+                if (colour.Evaluator(item) == true)
+                {
+                    Console.ForegroundColor = colour.Colour;
+                    return;
+                }
+            }
+
+            Console.ForegroundColor = original;
         }
     }
 }

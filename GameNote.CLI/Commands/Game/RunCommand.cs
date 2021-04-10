@@ -9,17 +9,31 @@ namespace GameNote.CLI.Commands.Game
     [Command(Name = "run", Description = "Run the on close action for a game")]
     internal class RunCommand : BaseCommand
     {
-        private readonly GameCloseDialog _dialogHandler;
+        private readonly IDialogHandler _dialogHandler;
         private readonly IGameCloseActionHandler _gameCloseActionHandler;
         private readonly ISettingsHandler _settingsHandler;
 
-        [Option(CommandOptionType.SingleValue, ShortName = "f", LongName = "force", Description = "Force through the action without checking for the users input")]
+        [Option(
+            CommandOptionType.SingleValue, 
+            ShortName = "f", 
+            LongName = "force", 
+            Description = "Force through the action without checking for the users input"
+        )]
         public bool Force { get; set; } = false;
 
-        [Option(CommandOptionType.SingleValue, ShortName = "g", LongName = "game", Description = "The game whose on close you want to run")]
+        [Option(
+            CommandOptionType.SingleValue, 
+            ShortName = "g", 
+            LongName = "game", 
+            Description = "The game whose on close you want to run"
+        )]
         public string Game { get; set; }
 
-        public RunCommand(ISettingsHandler settingsHandler, IGameCloseActionHandler gameCloseActionHandler, GameCloseDialog dialogHandler)
+        public RunCommand(
+            ISettingsHandler settingsHandler, 
+            IGameCloseActionHandler gameCloseActionHandler, 
+            IDialogHandler dialogHandler
+        )
         {
             _settingsHandler = settingsHandler;
             _gameCloseActionHandler = gameCloseActionHandler;
@@ -33,25 +47,35 @@ namespace GameNote.CLI.Commands.Game
 
             var settings = _settingsHandler.Load();
 
-            var gameToRun = settings.FindGame(Game);
+            GameSetting gameToRun = settings.FindGame(Game);
             if (gameToRun == null)
                 return Fail($"No game found for: {Game}");
 
-            if (Force == false)
+            if (Force == true)
             {
-                var action = _dialogHandler.Ask(gameToRun.GameCloseAction);
-                _gameCloseActionHandler.Run(
-                    new GameSetting(gameToRun.FilePath, action),
-                    (message) => Message(message)
-                );
+                Message("Forcing game close event");
+                RunGameCloseEvent(gameToRun);
+                return Success();
+            }
+
+            var dialogResult = _dialogHandler.AskYesNo($"Do you want to take notes for the game {gameToRun.FileName}?");
+            if (dialogResult == DialogResult.Yes)
+            {
+                Message("User selected to run the action");
+                RunGameCloseEvent(gameToRun);
             }
             else
-                _gameCloseActionHandler.Run(
-                    gameToRun,
-                    (message) => Message(message)
-                );
-
+                Message("User selected to not run the action");
+        
             return Success();
+        }
+
+        private void RunGameCloseEvent(GameSetting gameToRun)
+        {
+            _gameCloseActionHandler.Run(
+                gameToRun,
+                (message) => Message(message)
+            );
         }
     }
 }

@@ -10,14 +10,24 @@ namespace GameNote.Core.Settings
         private readonly IFileSystemHandler _fileSystemHandler;
         private readonly ISettingsHandler _settingsHandler;
 
-        private FileInfo _filePath { get; set; }
-        private GameCloseActionEnum? _action { get; set; }
-        private string _arguments { get; set; }
+        private FileInfo _filePath;
+        private GameCloseActionEnum? _action;
+        private string _arguments;
         
         public GameSettingBuilder(IFileSystemHandler fileSystemHandler, ISettingsHandler settingsHandler)
         {
             _fileSystemHandler = fileSystemHandler;
             _settingsHandler = settingsHandler;
+        }
+
+        public GameSettingBuilder Load(GameSetting original)
+        {
+            _filePath = new FileInfo(original.FilePath);
+            _action = original.GameCloseAction.Action;
+            _arguments = original.GameCloseAction.Arguments;
+            _addGame = false;
+
+            return this;
         }
 
         public GameSettingBuilder FromFullPath(string fullPath)

@@ -17,7 +17,7 @@ namespace GameNote.WindowsConfirm
             Application.SetHighDpiMode(HighDpiMode.SystemAware);
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new ConfirmDialog());
+            Application.Run(new ConfirmDialog(""));
         }
     }
 }
