@@ -26,7 +26,7 @@ namespace GameNote.CLI.Commands.Game
         public string Game { get; set; }
 
         [Option(
-            CommandOptionType.SingleOrNoValue, 
+            CommandOptionType.SingleValue, 
             ShortName = "u", 
             LongName = "url", 
             Description = "The url to open when the game closes"
@@ -34,7 +34,7 @@ namespace GameNote.CLI.Commands.Game
         public string OpenUrl { get; set; }
 
         [Option(
-            CommandOptionType.SingleOrNoValue, 
+            CommandOptionType.SingleValue, 
             ShortName = "c", 
             LongName = "cmd", 
             Description = "The command to run through command prompt"
@@ -58,7 +58,7 @@ namespace GameNote.CLI.Commands.Game
             if (OpenUrl.HasValue())
             {
                 _gameSettingsBuilder.OnGameCloseOpenUrl(OpenUrl);
-                action = $"Open url -> {action}";
+                action = $"Open url -> {OpenUrl}";
             }
             else if (Command.HasValue())
             {

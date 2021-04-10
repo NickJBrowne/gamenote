@@ -25,7 +25,6 @@ namespace GameNote.Core.Settings
             _filePath = new FileInfo(original.FilePath);
             _action = original.GameCloseAction.Action;
             _arguments = original.GameCloseAction.Arguments;
-            _addGame = false;
 
             return this;
         }
