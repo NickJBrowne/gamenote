@@ -6,10 +6,11 @@
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "build",
-            "program": "${workspaceFolder}/GameNote.CLI/bin/Debug/net5.0/GameNote.CLI.dll",
+            "program": "${workspaceFolder}/GameNote.CLI/bin/Debug/net5.0-windows/GameNote.CLI.dll",
             "args": [
                 "game",
-                "list"
+                "run",
+                "-g", "SpaceCrew.exe"
             ],
             "cwd": "${workspaceFolder}",
             "stopAtEntry": false,

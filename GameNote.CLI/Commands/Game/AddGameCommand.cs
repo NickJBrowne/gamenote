@@ -8,11 +8,11 @@ namespace GameNote.CLI.Commands.Game
     [Command(Name = "add", Description = "Add a game")]
     class AddGameCommand : BaseCommand
     {
-        private readonly GameSettingBuilder _builder;
+        private readonly GameSettingBuilder _gameSettingsBuilder;
 
-        public AddGameCommand(GameSettingBuilder builder)
+        public AddGameCommand(GameSettingBuilder gameSettingsBuilder)
         {
-            _builder = builder;
+            _gameSettingsBuilder = gameSettingsBuilder;
         }
 
         [Option(CommandOptionType.SingleValue, ShortName = "p", LongName = "full-path", Description = "The full path to the game")]
@@ -33,23 +33,23 @@ namespace GameNote.CLI.Commands.Game
         protected override Task<int> OnExecute(CommandLineApplication app)
         {
             if (DirectPath.HasValue())
-                _builder.FromFullPath(DirectPath);
+                _gameSettingsBuilder.FromFullPath(DirectPath);
             else if (Directory.HasValue() && FileName.HasValue())
-                _builder.WithinDirectory(Directory, FileName);
+                _gameSettingsBuilder.WithinDirectory(Directory, FileName);
             else
                 return Fail("You must specify either a direct file path or a folder path and a file name");
 
             if (OpenUrl.HasValue())
-                _builder.OnGameCloseOpenUrl(OpenUrl);
+                _gameSettingsBuilder.OnGameCloseOpenUrl(OpenUrl);
             else if (Command.HasValue())
-                _builder.OnGameCloseOpenProgram(Command);
+                _gameSettingsBuilder.OnGameCloseOpenProgram(Command);
             else
             {
                 Message("On game close, nothing will happen");
-                _builder.OnGameCloseDoNothing();
+                _gameSettingsBuilder.OnGameCloseDoNothing();
             }
 
-            string fileName = _builder.Build();
+            string fileName = _gameSettingsBuilder.Build();
             SuccessMessage($"Added game: {fileName}");
             return Success();
         }

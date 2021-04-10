@@ -2,7 +2,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\GameNote.Core\GameNote.Core.csproj" />
-    <ProjectReference Include="..\GameNote.WinConfirm\GameNote.WinConfirm.csproj" />
+    <ProjectReference Include="..\GameNote.WindowsConfirm\GameNote.WindowsConfirm.csproj" />
     <ProjectReference Include="..\Helpers\Helpers.csproj" />
   </ItemGroup>
 

@@ -1,18 +1,22 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace GameNote.WinConfirm
+namespace GameNote.WindowsConfirm
 {
-    public partial class CheckDialog : Form
+    public partial class ConfirmDialog : Form
     {
-        private string _question = string.Empty;
-        private string _cliDirectory = string.Empty;
         public bool SelectedYes { get; set; } = false;
 
-        public CheckDialog(string question)
+        public ConfirmDialog()
         {
-            _question = question;
-            _cliDirectory = Environment.CurrentDirectory;
+            InitializeComponent();
         }
 
         private void btnNo_Click(object sender, EventArgs e)
@@ -27,7 +31,7 @@ namespace GameNote.WinConfirm
             this.Close();
         }
 
-        private void CheckDialog_KeyDown(object sender, KeyEventArgs e)
+        private void btnYes_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
                 btnYes_Click(sender, e);
@@ -36,13 +40,9 @@ namespace GameNote.WinConfirm
                 btnNo_Click(sender, e);
         }
 
-        private void Form1_Load(object sender, EventArgs e)
+        private void ConfirmDialog_Load(object sender, EventArgs e)
         {
-            //lblQuestion.Text = _question;
-            /*lblQuestion.Text = string.Format(
-                Properties.Resources.Question,
-                _exeFileName
-            );*/
+            StartPosition = FormStartPosition.CenterScreen;
         }
     }
 }

@@ -4,23 +4,20 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace GameNote.WinConfirm
+namespace GameNote.WindowsConfirm
 {
-    internal static class Program
+    static class Program
     {
         /// <summary>
         ///  The main entry point for the application.
         /// </summary>
         [STAThread]
-        private static void Main(string[] args)
+        static void Main()
         {
-            //if (args.Count() != 2)
-            //throw new Exception("The number of exceptions does not match the expected number");
-
             Application.SetHighDpiMode(HighDpiMode.SystemAware);
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new CheckDialog("Test"));
+            Application.Run(new ConfirmDialog());
         }
     }
 }
