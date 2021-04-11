@@ -31,12 +31,15 @@ namespace GameNote.Core.Settings
         }
 
         public GameSetting FindGame(string fileName)
-            => Games.SingleOrDefault(g => g.FileName.ToLower() == fileName.ToLower());
+            => Games.SingleOrDefault(g => g.FileName.ToLower().Contains(fileName.ToLower()));
 
         public bool HasGames()
             => this.Games.Any();
 
         public bool HasSettings(FileInfo fileInfo)
             => this.Games.Any(g => g.FilePath.ToLower() == fileInfo.FullName.ToLower());
+
+        public bool Remove(string gameName)
+            => Games.Remove(r => r.FileName.ToLower().Contains(gameName.ToLower()));
     }
 }

@@ -6,12 +6,12 @@ using McMaster.Extensions.CommandLineUtils;
 namespace GameNote.CLI.Commands.Game
 {
     [Command(Name = "update", Description = "Update a game")]
-    class UpdateCommand : BaseCommand
+    class UpdateGameCommand : BaseCommand
     {
         private readonly GameSettingBuilder _gameSettingsBuilder;
         private readonly ISettingsHandler _settingsHandler;
 
-        public UpdateCommand(GameSettingBuilder builder, ISettingsHandler settingsHandler)
+        public UpdateGameCommand(GameSettingBuilder builder, ISettingsHandler settingsHandler)
         {
             _gameSettingsBuilder = builder;
             _settingsHandler = settingsHandler;

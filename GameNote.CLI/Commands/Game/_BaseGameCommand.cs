@@ -8,7 +8,8 @@ namespace GameNote.CLI.Commands.Game
         typeof(FindCommand),
         typeof(AddGameCommand),
         typeof(RunCommand),
-        typeof(UpdateCommand)
+        typeof(UpdateGameCommand),
+        typeof(RemoveGameCommand)
     )]
     class BaseGameCommand : BaseCommand
     {
