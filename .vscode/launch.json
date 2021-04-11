@@ -20,7 +20,7 @@
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "build-service",
-            "program": "${workspaceFolder}/GameNote.Service/bin/Debug/net5.0/GameNote.Service.dll",
+            "program": "${workspaceFolder}/GameNote.Service/bin/Debug/net5.0-windows/GameNote.Service.dll",
             "args": [],
             "cwd": "${workspaceFolder}",
             "stopAtEntry": false,
