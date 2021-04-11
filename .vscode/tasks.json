@@ -25,6 +25,19 @@
             ],
             "problemMatcher": "$msCompile"
         },
+        {
+            "label": "publish",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "publish",
+                "${workspaceFolder}/GameNote.Service/GameNote.Service.csproj",
+                "--configuration", "Release",
+                "--runtime", "win-x64",
+                "/p:PublishSingleFile=true"
+            ],
+            "problemMatcher": "$msCompile"
+        }
     ],
     "inputs": [
         {
