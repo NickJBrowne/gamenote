@@ -26,7 +26,10 @@ namespace GameNote.CLI.Helpers
             _list = list;
         }
 
-        public ConsoleWriteTable<T> AddColumn(string columnName, Func<T, string> column, ColumnAlign align = ColumnAlign.Center)
+        public ConsoleWriteTable<T> AddColumn(
+            string columnName, 
+            Func<T, string> column, 
+            ColumnAlign align = ColumnAlign.Center)
         {
             _columns.Add(columnName, column);
 
@@ -37,6 +40,9 @@ namespace GameNote.CLI.Helpers
                 if (length > columnWidth)
                     columnWidth = length;
             }
+
+            if (columnWidth < columnName.Length)
+                columnWidth = columnName.Length;
 
             columnWidth += (_padding * 2) + 1;
             _columnWidths.Add(columnName, columnWidth);
@@ -59,7 +65,7 @@ namespace GameNote.CLI.Helpers
 
         public void Write()
         {
-            string lineSeperator = ConstructLine(_width);
+            string lineSeperator = ConstructLine(_width + _columns.Count);
             ConsoleColor originalColour = Console.ForegroundColor;
 
             Console.WriteLine(lineSeperator);

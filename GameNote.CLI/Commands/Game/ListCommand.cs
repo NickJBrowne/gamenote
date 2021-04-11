@@ -28,7 +28,7 @@ namespace GameNote.CLI.Commands.Game
             ConsoleWriteTable.New(settings.Games)
                 .AddColumn("File Name", g => Path.GetFileName(g.FilePath))
                 .AddColumn("File Path", g => g.FilePath, ColumnAlign.Left)
-                .AddColumn("OnCloseAction", g => g.GameCloseAction.Action.ToString())
+                .AddColumn("OnCloseAction", g => g.GameCloseAction.Action.GetDescription())
                 .AddColumn("Arguments", g => g.GameCloseAction.Arguments)
                 .Write();
                 
