@@ -16,9 +16,9 @@ using Microsoft.Extensions.Logging;
 
 namespace GameNote.CLI
 {
-    class Program
+    public class Program
     {
-        static async Task<int> Main(string[] args)
+        public static async Task<int> Main(string[] args)
         {            
             var builder = new HostBuilder()
                 .ConfigureServices((hostContext, services) =>

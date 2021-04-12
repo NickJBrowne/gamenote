@@ -33,11 +33,8 @@ namespace GameNote.Core.Settings
                 }
                 else
                 {
-                    if (new CLIHandler(AppContext.BaseDirectory).IsValidPath() == false)
-                        throw new Exception("Cannot create new settings because path to cli is missing");
-
                     _settings = Save(new GameNoteSettings());
-                }
+                }                
             }
 
             return _settings;

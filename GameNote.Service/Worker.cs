@@ -125,12 +125,18 @@ namespace GameNote.Service
             await game.WaitForExitAsync(cancellationToken);
             _logger.LogInformation($"{game.ProcessName} has exited");
 
-            var cli = new CLIHandler(AppContext.BaseDirectory);
+            var result = GameNote.CLI.Program.Main(new string[] {
+                "game",
+                "run",
+                "--game", game.ProcessName
+            });
+
+            /*var cli = new CLIHandler(AppContext.BaseDirectory);
             
             if (cli.IsValidPath() == false)
                 throw new Exception("Cannot run game because path to CLI is not provided in settings");
 
-            cli.GameRun(game.ProcessName);
+            cli.GameRun(game.ProcessName);*/
         }
     }
 }
