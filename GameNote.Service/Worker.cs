@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Timers;
+using GameNote.CLI;
 using GameNote.Core;
 using GameNote.Core.GameClose;
 using GameNote.Core.Settings;
@@ -125,18 +126,9 @@ namespace GameNote.Service
             await game.WaitForExitAsync(cancellationToken);
             _logger.LogInformation($"{game.ProcessName} has exited");
 
-            var result = GameNote.CLI.Program.Main(new string[] {
-                "game",
-                "run",
-                "--game", game.ProcessName
-            });
-
-            /*var cli = new CLIHandler(AppContext.BaseDirectory);
-            
-            if (cli.IsValidPath() == false)
-                throw new Exception("Cannot run game because path to CLI is not provided in settings");
-
-            cli.GameRun(game.ProcessName);*/
+            await new GameNoteCli()
+                .Game
+                .Run(game.ProcessName);
         }
     }
 }

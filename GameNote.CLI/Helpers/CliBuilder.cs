@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace GameNote.CLI.Helpers
 {
@@ -28,7 +29,10 @@ namespace GameNote.CLI.Helpers
             return this;
         }
 
-        public string[] Build()
-            => _args.ToArray();
+        public async Task<CliCommandResult> Run()
+        {
+            var result = await Program.Main(_args.ToArray());
+            return result == 1 ? CliCommandResult.Fail() : CliCommandResult.Success();
+        }
     }
 }

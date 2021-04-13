@@ -12,10 +12,6 @@ namespace GameNote.CLI.Helpers
             _command = command;
         }
 
-        public async Task<CliCommandResult> Run(string[] args)
-        {
-            var result = await Program.Main(args);
-            return result == 1 ? CliCommandResult.Fail() : CliCommandResult.Success();
-        }
+        protected CliBuilder Command() => new CliBuilder(_command);
     }
 }

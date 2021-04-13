@@ -16,7 +16,7 @@ using Microsoft.Extensions.Logging;
 
 namespace GameNote.CLI
 {
-    public class Program
+    class Program
     {
         public static async Task<int> Main(string[] args)
         {            
