@@ -6,9 +6,12 @@ using McMaster.Extensions.CommandLineUtils;
 
 namespace GameNote.CLI.Commands.Game
 {
-    [Command(Name = "run", Description = "Run the on close action for a game")]
+    [Command(Name = CommandKeys.Game_Run, Description = "Run the on close action for a game")]
     internal class RunCommand : BaseCommand
     {
+        public const string ForceKey = "force";
+        public const string GameKey = "game";
+
         private readonly IDialogHandler _dialogHandler;
         private readonly IGameCloseActionHandler _gameCloseActionHandler;
         private readonly ISettingsHandler _settingsHandler;
@@ -16,7 +19,7 @@ namespace GameNote.CLI.Commands.Game
         [Option(
             CommandOptionType.SingleValue, 
             ShortName = "f", 
-            LongName = "force", 
+            LongName = ForceKey, 
             Description = "Force through the action without checking for the users input"
         )]
         public bool Force { get; set; } = false;
@@ -24,7 +27,7 @@ namespace GameNote.CLI.Commands.Game
         [Option(
             CommandOptionType.SingleValue, 
             ShortName = "g", 
-            LongName = "game", 
+            LongName = GameKey, 
             Description = "The game whose on close you want to run"
         )]
         public string Game { get; set; }

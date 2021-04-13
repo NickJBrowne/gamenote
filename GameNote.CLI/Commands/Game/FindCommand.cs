@@ -7,7 +7,7 @@ using McMaster.Extensions.CommandLineUtils;
 
 namespace GameNote.CLI.Commands.Game
 {
-    [Command(Name = "find", Description = "Find game files within a directory")]
+    [Command(Name = CommandKeys.Game_Find, Description = "Find game files within a directory")]
     class FindCommand : BaseCommand
     {
         private readonly GetGamesInDirectory _handler;

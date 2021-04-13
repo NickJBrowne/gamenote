@@ -2,7 +2,7 @@ using McMaster.Extensions.CommandLineUtils;
 
 namespace GameNote.CLI.Commands.Settings
 {
-    [Command(Name = "settings", Description = "Settings options")]
+    [Command(Name = CommandKeys.Settings, Description = "Settings options")]
     [Subcommand(
         typeof(OpenFolderCommand),
         typeof(ResetCommand)
