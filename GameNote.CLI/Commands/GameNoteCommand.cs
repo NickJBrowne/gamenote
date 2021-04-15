@@ -10,7 +10,7 @@ namespace GameNote.CLI.Commands
         typeof(BaseGameCommand),
         typeof(BaseSettingsCommand)
     )]
-    class GameNoteCommand : BaseCommand
+    public class GameNoteCommand : BaseCommand
     {
         protected override Task<int> OnExecute(CommandLineApplication app)
         {

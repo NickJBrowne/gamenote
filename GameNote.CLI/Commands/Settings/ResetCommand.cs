@@ -9,7 +9,7 @@ using Microsoft.Extensions.Options;
 namespace GameNote.CLI.Commands.Settings
 {
     [Command(Name = CommandKeys.Settings_Reset, Description = "Regenerate the settings command")]
-    class ResetCommand : BaseCommand
+    public class ResetCommand : BaseCommand
     {
         private readonly GameNoteConfiguration _config;
         private readonly ISettingsHandler _settingsHandler;

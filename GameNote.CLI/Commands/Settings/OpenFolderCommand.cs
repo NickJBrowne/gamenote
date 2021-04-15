@@ -8,7 +8,7 @@ using McMaster.Extensions.CommandLineUtils;
 namespace GameNote.CLI.Commands.Settings
 {
     [Command(Name = CommandKeys.Settings_OpenFolder, Description = "Open the folder that has the settings file")]
-    class OpenFolderCommand : BaseCommand
+    public class OpenFolderCommand : BaseCommand
     {
         private readonly ISettingsHandler _settingsHandler;
 

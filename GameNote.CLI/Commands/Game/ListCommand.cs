@@ -9,7 +9,7 @@ using McMaster.Extensions.CommandLineUtils;
 namespace GameNote.CLI.Commands.Game
 {
     [Command(Name = CommandKeys.Game_List, Description = "List all configured games")]
-    class ListCommand : BaseCommand
+    public class ListCommand : BaseCommand
     {
         private readonly ISettingsHandler _settingsHandler;
 

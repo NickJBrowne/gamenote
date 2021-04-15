@@ -6,7 +6,7 @@ using McMaster.Extensions.CommandLineUtils;
 namespace GameNote.CLI.Commands.Game
 {
     [Command(Name = CommandKeys.Game_Update, Description = "Update a game")]
-    class UpdateGameCommand : BaseCommand
+    public class UpdateGameCommand : BaseCommand
     {
         private readonly GameSettingBuilder _gameSettingsBuilder;
         private readonly ISettingsHandler _settingsHandler;

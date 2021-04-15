@@ -4,8 +4,8 @@ using McMaster.Extensions.CommandLineUtils;
 
 namespace GameNote.CLI.Commands
 {
-    [HelpOption]
-    abstract class BaseCommand
+    [HelpOption]    
+    public abstract class BaseCommand
     {
         protected virtual Task<int> OnExecute(CommandLineApplication app)
         {            

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using GameNote.CLI.Commands;
 using GameNote.Core;
@@ -10,7 +11,7 @@ using McMaster.Extensions.CommandLineUtils;
 
 namespace GameNote.CLI.Helpers
 {
-    class CliBuilder<T> : CliBuilder
+    public class CliBuilder<T> : CliBuilder
         where T : BaseCommand
     {
         public CliBuilder(string start) : base(start)
@@ -54,7 +55,7 @@ namespace GameNote.CLI.Helpers
         }
     }
 
-    class CliBuilder
+    public class CliBuilder
     {
         private List<string> _args = new List<string>();
 
@@ -82,9 +83,12 @@ namespace GameNote.CLI.Helpers
             return this;
         }
 
+        public string[] GetArguments()
+            => _args.ToArray();
+
         public async Task<CliCommandResult> Run()
         {
-            var result = await Program.Main(_args.ToArray());
+            var result = await Program.Main(GetArguments());
             return result == 1 ? CliCommandResult.Fail() : CliCommandResult.Success();
         }
     }

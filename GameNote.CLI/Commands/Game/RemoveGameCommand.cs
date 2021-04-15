@@ -5,7 +5,7 @@ using McMaster.Extensions.CommandLineUtils;
 namespace GameNote.CLI.Commands.Game
 {
     [Command(Name = CommandKeys.Game_Remove, Description = "Remove a game")]
-    class RemoveGameCommand : BaseCommand
+    public class RemoveGameCommand : BaseCommand
     {
         private readonly ISettingsHandler _settingsHandler;
 

@@ -15,6 +15,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GameNote.Service", "GameNot
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameNote.WindowsConfirm", "GameNote.WindowsConfirm\GameNote.WindowsConfirm.csproj", "{D8E892EE-05D1-4479-9296-F5E22BA60049}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameNote.CLI.Tests", "GameNote.CLI.Tests\GameNote.CLI.Tests.csproj", "{8F3A71F6-C3A6-418A-A22B-1FD048F0532E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -97,6 +99,18 @@ Global
 		{D8E892EE-05D1-4479-9296-F5E22BA60049}.Release|x64.Build.0 = Release|Any CPU
 		{D8E892EE-05D1-4479-9296-F5E22BA60049}.Release|x86.ActiveCfg = Release|Any CPU
 		{D8E892EE-05D1-4479-9296-F5E22BA60049}.Release|x86.Build.0 = Release|Any CPU
+		{8F3A71F6-C3A6-418A-A22B-1FD048F0532E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8F3A71F6-C3A6-418A-A22B-1FD048F0532E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8F3A71F6-C3A6-418A-A22B-1FD048F0532E}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{8F3A71F6-C3A6-418A-A22B-1FD048F0532E}.Debug|x64.Build.0 = Debug|Any CPU
+		{8F3A71F6-C3A6-418A-A22B-1FD048F0532E}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{8F3A71F6-C3A6-418A-A22B-1FD048F0532E}.Debug|x86.Build.0 = Debug|Any CPU
+		{8F3A71F6-C3A6-418A-A22B-1FD048F0532E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8F3A71F6-C3A6-418A-A22B-1FD048F0532E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8F3A71F6-C3A6-418A-A22B-1FD048F0532E}.Release|x64.ActiveCfg = Release|Any CPU
+		{8F3A71F6-C3A6-418A-A22B-1FD048F0532E}.Release|x64.Build.0 = Release|Any CPU
+		{8F3A71F6-C3A6-418A-A22B-1FD048F0532E}.Release|x86.ActiveCfg = Release|Any CPU
+		{8F3A71F6-C3A6-418A-A22B-1FD048F0532E}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

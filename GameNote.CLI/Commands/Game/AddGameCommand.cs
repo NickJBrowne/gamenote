@@ -7,7 +7,7 @@ using McMaster.Extensions.CommandLineUtils;
 namespace GameNote.CLI.Commands.Game
 {
     [Command(Name = CommandKeys.Game_AddGame, Description = "Add a game")]
-    class AddGameCommand : BaseCommand
+    public class AddGameCommand : BaseCommand
     {
         private readonly GameSettingBuilder _gameSettingsBuilder;
 

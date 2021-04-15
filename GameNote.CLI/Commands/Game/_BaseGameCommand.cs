@@ -11,7 +11,7 @@ namespace GameNote.CLI.Commands.Game
         typeof(UpdateGameCommand),
         typeof(RemoveGameCommand)
     )]
-    class BaseGameCommand : BaseCommand
+    public class BaseGameCommand : BaseCommand
     {
         
     }

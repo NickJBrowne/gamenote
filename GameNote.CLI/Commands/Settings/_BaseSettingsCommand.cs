@@ -7,7 +7,7 @@ namespace GameNote.CLI.Commands.Settings
         typeof(OpenFolderCommand),
         typeof(ResetCommand)
     )]
-    class BaseSettingsCommand : BaseCommand
+    public class BaseSettingsCommand : BaseCommand
     {
         
     }

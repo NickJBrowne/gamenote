@@ -8,7 +8,7 @@ using McMaster.Extensions.CommandLineUtils;
 namespace GameNote.CLI.Commands.Game
 {
     [Command(Name = CommandKeys.Game_Run, Description = "Run the on close action for a game")]
-    internal class RunCommand : BaseCommand
+    public class RunCommand : BaseCommand
     {
         private readonly IDialogHandler _dialogHandler;
         private readonly IGameCloseActionHandler _gameCloseActionHandler;
