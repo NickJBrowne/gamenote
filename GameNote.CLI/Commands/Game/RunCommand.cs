@@ -1,4 +1,5 @@
 using System.Threading.Tasks;
+using GameNote.CLI.Helpers;
 using GameNote.Core;
 using GameNote.Core.GameClose;
 using GameNote.Core.Settings;
@@ -9,25 +10,22 @@ namespace GameNote.CLI.Commands.Game
     [Command(Name = CommandKeys.Game_Run, Description = "Run the on close action for a game")]
     internal class RunCommand : BaseCommand
     {
-        public const string ForceKey = "force";
-        public const string GameKey = "game";
-
         private readonly IDialogHandler _dialogHandler;
         private readonly IGameCloseActionHandler _gameCloseActionHandler;
         private readonly ISettingsHandler _settingsHandler;
 
         [Option(
             CommandOptionType.SingleValue, 
-            ShortName = "f", 
-            LongName = ForceKey, 
+            ShortName = CliCommandKeys.Force.Short, 
+            LongName = CliCommandKeys.Force.Long, 
             Description = "Force through the action without checking for the users input"
         )]
         public bool Force { get; set; } = false;
 
         [Option(
             CommandOptionType.SingleValue, 
-            ShortName = "g", 
-            LongName = GameKey, 
+            ShortName = CliCommandKeys.Game.Short, 
+            LongName = CliCommandKeys.Game.Long, 
             Description = "The game whose on close you want to run"
         )]
         public string Game { get; set; }

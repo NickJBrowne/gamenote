@@ -1,4 +1,5 @@
 using System.Threading.Tasks;
+using GameNote.CLI.Helpers;
 using GameNote.Core;
 using GameNote.Core.Settings;
 using McMaster.Extensions.CommandLineUtils;
@@ -8,12 +9,6 @@ namespace GameNote.CLI.Commands.Game
     [Command(Name = CommandKeys.Game_AddGame, Description = "Add a game")]
     class AddGameCommand : BaseCommand
     {
-        public const string FullPathKey = "full-path";
-        public const string DirectoryKey = "directory";
-        public const string GameKey = "game";
-        public const string UrlKey = "url";
-        public const string CommandKey = "cmd";
-
         private readonly GameSettingBuilder _gameSettingsBuilder;
 
         public AddGameCommand(GameSettingBuilder gameSettingsBuilder)
@@ -23,40 +18,40 @@ namespace GameNote.CLI.Commands.Game
 
         [Option(
             CommandOptionType.SingleValue, 
-            ShortName = "p", 
-            LongName = FullPathKey, 
+            ShortName = CliCommandKeys.FullPath.Short, 
+            LongName = CliCommandKeys.FullPath.Long, 
             Description = "The full path to the game"
         )]
         public string DirectPath { get; set; }
 
         [Option(
             CommandOptionType.SingleValue, 
-            ShortName = "d", 
-            LongName = DirectoryKey, 
+            ShortName = CliCommandKeys.Directory.Short, 
+            LongName = CliCommandKeys.Directory.Long, 
             Description = "A directory to look under, use with -exe|--file-name"
         )]
         public string Directory { get; set; }
 
         [Option(
             CommandOptionType.SingleValue, 
-            ShortName = "g", 
-            LongName = GameKey, 
+            ShortName = CliCommandKeys.Game.Short, 
+            LongName = CliCommandKeys.Game.Long, 
             Description = "The name of the file to look for under the directory, use with -d|--directory"
         )]
         public string FileName { get; set; }
 
         [Option(
             CommandOptionType.SingleValue, 
-            ShortName = "u", 
-            LongName = UrlKey, 
+            ShortName = CliCommandKeys.Url.Short, 
+            LongName = CliCommandKeys.Url.Long, 
             Description = "The url to open when the game closes"
         )]
         public string OpenUrl { get; set; }
 
         [Option(
             CommandOptionType.SingleValue, 
-            ShortName = "c", 
-            LongName = CommandKey, 
+            ShortName = CliCommandKeys.Command.Short, 
+            LongName = CliCommandKeys.Command.Long, 
             Description = "The command to run through command prompt"
         )]
         public string Command { get; set; }

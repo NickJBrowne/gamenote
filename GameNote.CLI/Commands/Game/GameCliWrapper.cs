@@ -11,15 +11,15 @@ namespace GameNote.CLI.Commands.Game
         }
 
         public async Task<CliCommandResult> Add(string fullPathToGame, Uri urlToOpen)
-            => await Command()
-                .Option(AddGameCommand.FullPathKey, fullPathToGame)
-                .Option(AddGameCommand.UrlKey, urlToOpen.ToString())
+            => await Command<AddGameCommand>()
+                .Option(c => c.DirectPath, fullPathToGame)
+                .Option(c => c.OpenUrl, urlToOpen.ToString())
                 .Run();
 
         public async Task<CliCommandResult> Run(string game, bool force=false)
-            => await Command()
-                .Option(RunCommand.GameKey, game)
-                .Option(RunCommand.ForceKey, force)
+            => await Command<RunCommand>()
+                .Option(c => c.Game, game)
+                .Option(c => c.Force, force)
                 .Run();
     }
 }

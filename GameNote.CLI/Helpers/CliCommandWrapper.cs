@@ -1,5 +1,6 @@
 using System;
 using System.Threading.Tasks;
+using GameNote.CLI.Commands;
 
 namespace GameNote.CLI.Helpers
 {
@@ -12,6 +13,9 @@ namespace GameNote.CLI.Helpers
             _command = command;
         }
 
-        protected CliBuilder Command() => new CliBuilder(_command);
+        internal CliBuilder Command() => new CliBuilder(_command);
+        internal CliBuilder<T> Command<T>()
+            where T : BaseCommand
+            => new CliBuilder<T>(_command);
     }
 }

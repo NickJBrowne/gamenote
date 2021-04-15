@@ -21,8 +21,8 @@ namespace GameNote.CLI.Commands.Game
 
         [Option(
             CommandOptionType.SingleValue, 
-            ShortName = "d", 
-            LongName = "directory", 
+            ShortName = CliCommandKeys.Directory.Short, 
+            LongName = CliCommandKeys.Directory.Long, 
             Description = "The directory to look in"
         )]
         public string Directory { get; set; }
